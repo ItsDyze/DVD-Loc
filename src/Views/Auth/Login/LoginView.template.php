@@ -1,5 +1,5 @@
 <style>
-    <?php require "LoginView.style.php"; ?>
+    <?php require "LoginView.style.css"; ?>
 </style>
 <div>
     <h2>

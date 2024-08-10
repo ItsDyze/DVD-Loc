@@ -43,7 +43,7 @@ namespace Views
 
             $data = $pData;
             ob_start();
-            require $viewName . ".style.php";
+            require $viewName . ".style.css";
             return ob_get_clean();
         }
     }

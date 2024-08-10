@@ -1,5 +1,5 @@
 <style>
-    <?php require "HomeView.style.php"; ?>
+    <?php require "HomeView.style.css"; ?>
 </style>
 
 <p>

@@ -1,5 +1,5 @@
 <style>
-    <?php require "RegisterView.style.php"; ?>
+    <?php require "RegisterView.style.css"; ?>
 </style>
 
 <form method="POST" action="">
