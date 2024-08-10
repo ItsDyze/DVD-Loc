@@ -4,3 +4,5 @@ DirectoryIndex index.php index.htm index.html
 
 RewriteEngine on
 RewriteBase /
+
+FallbackResource /index.php

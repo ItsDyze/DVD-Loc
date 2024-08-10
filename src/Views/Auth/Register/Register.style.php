@@ -1,0 +1,1 @@
+<?php namespace Views\Auth\Register; ?>

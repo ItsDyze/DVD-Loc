@@ -1,23 +1,25 @@
-<?php namespace Middlewares; ?>
+<?php namespace Controllers\Auth; ?>
 <?php
 
     $requestedController = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-    if(empty($requestedController))
+    if(empty($requestedController) || $requestedController[1] != "Auth")
     {
-        require_once SRC . 'Controllers/Home/HomeController.php';
+        require SRC . 'Controllers/Home/HomeController.php';
         $controller = new HomeController();
         $controller->Index();
     }
 
-    switch ($requestedController[1]) {
+    require_once SRC . 'Controllers/Auth/AuthController.php';
+    $controller = new AuthController();
+
+    switch ($requestedController[2]) {
         case '/' :
         case '' :
-            require_once SRC . 'Controllers/Home/HomeController.php';
-            $controller = new HomeController();
+        case 'Login' :
             $controller->Index();
             break;
-        case 'Auth' :
-            require_once SRC .  "Controllers/Auth/AuthRouter.php";
+        case 'Register' :
+            $controller->Register();
             break;
         default:
             http_response_code(404);
