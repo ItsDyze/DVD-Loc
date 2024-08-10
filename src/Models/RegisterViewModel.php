@@ -6,6 +6,10 @@ namespace Models
 
     class RegisterViewModel implements IViewModel
     {
+        function __construct()
+        {
+
+        }
         public RegisterViewStateEnum $viewState;
     }
 

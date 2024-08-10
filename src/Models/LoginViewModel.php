@@ -7,5 +7,6 @@ namespace Models
     class LoginViewModel implements IViewModel
     {
 
+        public LoginViewStateEnum $viewState;
     }
 }

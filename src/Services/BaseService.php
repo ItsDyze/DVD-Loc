@@ -1,8 +1,7 @@
-<?php namespace Services; ?>
 <?php
+namespace Services
+{
+    abstract class BaseService {
 
-abstract class BaseService {
-
+    }
 }
-
-?>

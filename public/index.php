@@ -1,6 +1,7 @@
 <?php
 
 # Globals definitions
+use Middlewares\Interceptor;
 use Middlewares\Routing;
 
 define( "SRC" , dirname(__FILE__, 2) . "\src\\" );
@@ -17,6 +18,10 @@ spl_autoload_register(function ($class) {
 
 # Default view
 include "./index.template.php";
+
+# Intercept requests if necessary
+$interceptor = new Interceptor();
+$interceptor->handle();
 
 # Call the router
 $router = new Routing();

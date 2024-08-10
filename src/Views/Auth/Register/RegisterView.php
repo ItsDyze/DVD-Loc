@@ -8,7 +8,7 @@ namespace Views\Auth\Register
 
     class RegisterView extends BaseView
     {
-        private RegisterViewModel $data;
+        public RegisterViewModel $data;
 
         public function __construct(RegisterViewModel $dataModel)
         {

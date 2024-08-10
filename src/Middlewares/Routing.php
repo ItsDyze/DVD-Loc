@@ -23,6 +23,7 @@ namespace Middlewares
             switch ($requestedController[1]) {
                 case '/' :
                 case '' :
+                case 'Home' :
                     $controller = new HomeController();
                     $controller->Index();
                     break;

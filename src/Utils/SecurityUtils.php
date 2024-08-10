@@ -1,14 +1,13 @@
-<?php namespace Utils; ?>
 <?php
-
-class SecurityUtils
+namespace Utils
 {
-
-    public static function HashPassword($password)
+    class SecurityUtils
     {
-        return password_hash($password, PASSWORD_BCRYPT);
+
+        public static function hashPassword($password)
+        {
+            return password_hash($password, PASSWORD_BCRYPT);
+        }
+
     }
-
 }
-
-?>

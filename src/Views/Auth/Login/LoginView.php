@@ -9,7 +9,7 @@ namespace Views\Auth\Login
     class LoginView extends BaseView
     {
 
-        private LoginViewModel $data;
+        public LoginViewModel $data;
         private string $content;
 
         public function __construct(LoginViewModel $dataModel)
