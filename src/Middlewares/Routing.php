@@ -1,27 +1,40 @@
-<?php namespace Middlewares; ?>
 <?php
+namespace Middlewares
+{
+    use Controllers\Auth\AuthRouter;
+    use Controllers\Home\HomeController;
 
-    $requestedController = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-    if(empty($requestedController))
+    class Routing
     {
-        require_once SRC . 'Controllers/Home/HomeController.php';
-        $controller = new HomeController();
-        $controller->Index();
-    }
+        function __construct()
+        {
 
-    switch ($requestedController[1]) {
-        case '/' :
-        case '' :
-            require_once SRC . 'Controllers/Home/HomeController.php';
-            $controller = new HomeController();
-            $controller->Index();
-            break;
-        case 'Auth' :
-            require_once SRC .  "Controllers/Auth/AuthRouter.php";
-            break;
-        default:
-            http_response_code(404);
-            echo 'Page not found';
-            break;
+        }
+
+        public function route(): void
+        {
+            $requestedController = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+            if(empty($requestedController))
+            {
+                $controller = new HomeController();
+                $controller->Index();
+            }
+
+            switch ($requestedController[1]) {
+                case '/' :
+                case '' :
+                    $controller = new HomeController();
+                    $controller->Index();
+                    break;
+                case 'Auth' :
+                    $subRouter = new AuthRouter();
+                    $subRouter->route();
+                    break;
+                default:
+                    http_response_code(404);
+                    echo 'Page not found';
+                    break;
+            }
+        }
     }
-?>
+}

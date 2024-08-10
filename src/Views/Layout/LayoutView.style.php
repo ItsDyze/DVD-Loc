@@ -1,6 +1,4 @@
-<?php namespace Views\Layout; ?>
-
-header 
+header
 {
     display: flex;
     flex-direction: row;

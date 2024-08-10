@@ -1,17 +1,14 @@
-<?php namespace Models; ?>
 <?php
-
-class RegisterViewModel 
+namespace Models
 {
-    public RegisterViewStateEnum $viewState;
+
+    use Interfaces\IViewModel;
+
+    class RegisterViewModel implements IViewModel
+    {
+        public RegisterViewStateEnum $viewState;
+    }
+
 }
 
-enum RegisterViewStateEnum
-{
-    case InProgress;
-    case FailedServer;
-    case FailedValidation;
-    case Success;
-}
 
-?>

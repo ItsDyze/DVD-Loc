@@ -1,38 +1,44 @@
-<?php namespace Controllers\Auth; ?>
 <?php
+    namespace Controllers\Auth
+    {
 
-    class AuthController {
-        public function Index() {
-            $title = "Login";
-            $view = SRC . "Views/Auth/Login/Login.php";
-            include SRC . 'Views/Layout/Layout.php';
-        }
+        use Models\LoginViewModel;
+        use Models\RegisterViewModel;
+        use Models\UserModel;
+        use Services\AuthService;
+        use Views\Auth\Login\LoginView;
+        use Views\Auth\Register\RegisterView;
 
-        public function Register() {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") 
+        class AuthController {
+            public function index(): void
             {
-                include_once SRC . "Services/AuthService.php";
-                include_once SRC . "Models/UserModel.php";
-                $authService = AuthService::getInstance();
+                $data = new LoginViewModel();
+                new LoginView($data);
+            }
 
-                $user = new UserModel();
-                $user->FirstName = trim($_POST["FirstName"]);
-                $user->LastName = trim($_POST["LastName"]);
-                $user->Email = trim($_POST["Email"]);
-                $user->Password = trim($_POST["Password"]);
-    
-                if ($authService->CreateUser($user)) {
-                    echo "Registration successful!";
-                } else {
-                    echo "Error: Could not register user.";
+            public function register(): void
+            {
+                if ($_SERVER["REQUEST_METHOD"] == "POST")
+                {
+                    $authService = AuthService::getInstance();
+
+                    $user = new UserModel();
+                    $user->FirstName = trim($_POST["FirstName"]);
+                    $user->LastName = trim($_POST["LastName"]);
+                    $user->Email = trim($_POST["Email"]);
+                    $user->Password = trim($_POST["Password"]);
+
+                    if ($authService->createUser($user)) {
+                        echo "Registration successful!";
+                    } else {
+                        echo "Error: Could not register user.";
+                    }
                 }
-            } 
-            else // GET
-            {
-                $title = "Register";
-                $view = SRC . "Views/Auth/Register/Register.php";
-                include SRC . 'Views/Layout/Layout.php';
+                else // GET
+                {
+                    $data = new RegisterViewModel();
+                    new RegisterView($data);
+                }
             }
         }
     }
-?>
