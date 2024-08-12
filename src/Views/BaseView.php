@@ -5,18 +5,19 @@ namespace Views
 
     use Interfaces\IViewModel;
     use Models\LayoutViewModel;
+    use Utils\JWTUtils;
 
     abstract class BaseView
     {
         protected string $viewName;
         protected string $subTitle;
         protected string $subContent;
-        protected LayoutViewModel $layoutData;
+        public LayoutViewModel $layoutData;
         protected string $cssInclude;
 
         protected abstract function render();
 
-        protected function renderLayout(LayoutViewModel $viewModel, IVIewModel $contentData): void
+        protected function renderLayout(LayoutViewModel $viewModel, IVIewModel|null $contentData): void
         {
             if(!isset($this->viewName))
             {
@@ -25,12 +26,24 @@ namespace Views
             }
 
             $this->layoutData = $viewModel;
+            if(isset($_COOKIE["jwt"]) && JWTUtils::isValid($_COOKIE["jwt"]))
+            {
+                $this->layoutData->isLoggedIn = true;
+                $this->layoutData->displayName = JWTUtils::getValue($_COOKIE["jwt"], "displayName");
+                $this->layoutData->isAdmin = JWTUtils::getValue($_COOKIE["jwt"], "isAdmin");
+
+            }
+            else
+            {
+                $this->layoutData->isLoggedIn = false;
+            }
+
             $this->subContent = $this->loadView($this->viewName, $contentData);
             $this->cssInclude = $this->loadCSS($this->viewName, $contentData);
             require "Layout/LayoutView.template.php";
         }
 
-        protected function loadView(string $viewFiles, IViewModel $pData): string
+        protected function loadView(string $viewFiles, IViewModel|null $pData): string
         {
             $data = $pData;
             ob_start();
@@ -38,7 +51,7 @@ namespace Views
             return ob_get_clean();
         }
 
-        protected function loadCSS(string $viewName, IViewModel $pData): string
+        protected function loadCSS(string $viewName, IViewModel|null $pData): string
         {
 
             $data = $pData;

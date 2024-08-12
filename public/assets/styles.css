@@ -13,3 +13,29 @@ header, footer {
 main {
     padding: 20px;
 }
+
+label {
+    display: flex;
+    height: 32px;
+    line-height: 32px;
+}
+
+label span {
+    display: none;
+}
+
+label input {
+    flex: 1;
+    linear-gradient(21deg, #10abff, #1beabd);
+    border-radius: 9999em;
+    text-align: center;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 280px;
+    height: 32px;
+}
+
+::placeholder {
+    text-align: center;
+}

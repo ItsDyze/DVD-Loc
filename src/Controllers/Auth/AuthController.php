@@ -2,12 +2,18 @@
     namespace Controllers\Auth
     {
 
+        use Controllers\Home\HomeController;
+        use HttpRequestException;
+        use Models\Exceptions\BadRouteException;
+        use Models\Exceptions\RouteNotFoundException;
+        use Models\JWTModel;
         use Models\LoginViewModel;
         use Models\LoginViewStateEnum;
         use Models\RegisterViewModel;
         use Models\RegisterViewStateEnum;
         use Models\UserModel;
         use Services\AuthService;
+        use Utils\JWTUtils;
         use Views\Auth\Login\LoginView;
         use Views\Auth\Register\RegisterView;
 
@@ -28,8 +34,18 @@
 
                     if($user)
                     {
-                        $data->viewState = LoginViewStateEnum::Success;
 
+                        $jwt = new JWTModel();
+                        $jwt->iat = time();
+                        $jwt->nbf = time();
+                        $jwt->exp = time() + 24*60*60;
+                        $jwt->displayName = $user->getDisplayName();
+                        $jwt->isAdmin = $user->Email == "contact@dyze.lu";
+
+                        $token = JWTUtils::encode((array) $jwt);
+
+                        setcookie("jwt", $token, JWTUtils::getValue($token, "exp"), "/");
+                        $data->viewState = LoginViewStateEnum::Success;
                     }
                     else
                     {
@@ -38,9 +54,27 @@
                 }
                 else
                 {
-
-                    $data->viewState = LoginViewStateEnum::InProgress;
+                    if(isset($_COOKIE['jwt']) &&
+                        JWTUtils::isValid($_COOKIE['jwt']))
+                    {
+                        $data->viewState = LoginViewStateEnum::Success;
+                    }
+                    else
+                    {
+                        $data->viewState = LoginViewStateEnum::InProgress;
+                    }
                 }
+
+                new LoginView($data);
+            }
+
+            public function logout(): void
+            {
+
+                $data = new LoginViewModel();
+                $data->viewState = LoginViewStateEnum::Logout;
+
+                setcookie('jwt', '', -1, '/');
 
                 new LoginView($data);
             }
@@ -79,6 +113,40 @@
                 }
 
                 new RegisterView($data);
+            }
+
+            /**
+             * @throws BadRouteException on routes not matching the required arguments
+             * @throws RouteNotFoundException on routes matching but not found
+             */
+            public function handle(): void
+            {
+                $requestedController = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+                if(empty($requestedController))
+                {
+                    throw new BadRouteException("Auth");
+                }
+
+                if(!isset($requestedController[2]))
+                {
+                    $this->index();
+                    exit;
+                }
+
+                switch (strtolower($requestedController[2])) {
+                    case '/' :
+                    case 'login' :
+                        $this->index();
+                        break;
+                    case 'logout' :
+                        $this->logout();
+                        break;
+                    case 'register' :
+                        $this->register();
+                        break;
+                    default:
+                        throw new RouteNotFoundException("Auth");
+                }
             }
         }
     }

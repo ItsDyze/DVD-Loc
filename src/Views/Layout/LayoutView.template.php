@@ -14,15 +14,23 @@
     <div class="wrapper">
         <header>
             <h1><a href="/">DVD-Loc</a></h1>
-            <div class="login-btn" onClick="document.location.href='/Auth/Login'">
-                Login
-            </div>
+            <?php
+                if(!$this->layoutData->isLoggedIn)
+                {
+                    include "Components/LoginBtn.template.php";
+                }
+                else
+                {
+                    include "Components/AccountMenu.template.php";
+                }
+
+            ?>
         </header>
         <main>
             <?php echo $this->subContent ?>
         </main>
         <footer>
-            <p>Footer content here</p>
+            <p>Dessiné, conçu, développé et hébergé par Dylan Zelmar</p>
         </footer>
     </div>
 </body>

@@ -3,10 +3,14 @@
 
 class UserModel
 {
-    public $LastName;
-    public $FirstName;
-    public $Email;
-    public $Password;
+    public string $LastName;
+    public string $FirstName;
+    public string $Email;
+    public string $Password;
+
+    public function getDisplayName(): string
+    {
+        return $this->FirstName . ' ' . $this->LastName;
+    }
 }
 
-?>

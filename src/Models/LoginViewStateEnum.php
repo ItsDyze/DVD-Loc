@@ -7,5 +7,6 @@ namespace Models
         case InProgress;
         case FailedServer;
         case Success;
+        case Logout;
     }
 }

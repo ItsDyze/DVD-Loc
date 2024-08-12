@@ -1,3 +1,7 @@
+/*
+    Defaults
+ */
+
 html, body {
     height: 100%;
     margin: 0;
@@ -18,27 +22,87 @@ body {
 
 header {
     display: flex;
+    flex: 0.5;
     background: #333;
     color: white;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
-main {
-    flex: 1;
-    padding: 20px;
+header h1 a {
+    text-decoration: none;
+    color: #fff;
+}
 
+main {
+    display: flex;
+    flex: 9;
+    padding: 20px;
+    justify-content: center;
     overflow-y: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
 }
 
 footer {
     background: #333;
+    flex: 0.5;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 2px;
     position: sticky;
     bottom: 0;
     width: 100%;
 }
+
+/*
+    Making a menu in native is a PAIN
+ */
+
+.login-btn {
+    position: relative;
+    display: inline-block;
+    margin: 0 64px;
+}
+
+.user-menu {
+    position: relative;
+    display: inline-block;
+    margin: 0 64px;
+}
+
+.menu-items {
+    display: none;
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.menu-items li {
+    padding: 5px 10px;
+}
+
+.menu-items li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.user img{
+    height: 32px;
+    width: 32px;
+
+}
+
+.user:hover + .menu-items,
+.menu-items:hover {
+    display: block;
+}
+

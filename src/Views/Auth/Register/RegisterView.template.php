@@ -13,9 +13,9 @@ switch ($this->data->viewState)
         case RegisterViewStateEnum::Success:
             echo "You have successfully registered.";
             ?>
-            <br/>Vous allez être automatiquement redirigé après 2 secondes. <a href="Login">Je suis pressé!</a>
+            <br/>Vous allez être automatiquement redirigé après 2 secondes. <a href="login">Je suis pressé!</a>
             <script>
-                setTimeout(()=>{document.location.href="Login"}, 2000);
+                setTimeout(()=>{document.location.href="login"}, 2000);
             </script>
             <?php
             break;

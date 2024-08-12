@@ -4,7 +4,7 @@
 require_once SRC . "Services/BaseService.php";
 abstract class SingletonBaseService extends BaseService {
 
-    protected static $instances = array();
+    protected static array $instances = array();
 
     protected abstract function __construct();
 
@@ -17,4 +17,3 @@ abstract class SingletonBaseService extends BaseService {
     }
 }
 
-?>

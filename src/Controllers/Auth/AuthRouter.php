@@ -1,7 +1,13 @@
 <?php
 namespace Controllers\Auth
 {
+
+    use Controllers\Error\ErrorController;
     use Controllers\Home\HomeController;
+    use Exception;
+    use HttpRequestException;
+    use Models\Exceptions\BadRouteException;
+    use Models\Exceptions\RouteNotFoundException;
 
     class AuthRouter
     {
@@ -10,31 +16,20 @@ namespace Controllers\Auth
 
         }
 
+        /**
+         * @throws BadRouteException on routes not matching the required arguments
+         * @throws RouteNotFoundException on routes not found
+         */
         public function route(): void
         {
             $requestedController = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
             if(empty($requestedController) || strtolower($requestedController[1]) != "auth")
             {
-                $controller = new HomeController();
-                $controller->Index();
+                throw new BadRouteException("Auth");
             }
 
             $controller = new AuthController();
-
-            switch (strtolower($requestedController[2])) {
-                case '/' :
-                case '' :
-                case 'login' :
-                    $controller->index();
-                    break;
-                case 'register' :
-                    $controller->register();
-                    break;
-                default:
-                    http_response_code(404);
-                    echo 'Page not found';
-                    break;
-            }
+            $controller->handle();
         }
     }
 }

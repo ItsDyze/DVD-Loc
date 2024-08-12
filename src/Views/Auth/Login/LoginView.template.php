@@ -5,12 +5,20 @@ use Models\LoginViewStateEnum;
 switch ($this->data->viewState)
 {
     case LoginViewStateEnum::Success:
-        echo "You have logged in successfully.";
+        echo "Vous êtes connectés avec succès.";
         ?>
-        <br/>Vous allez être automatiquement redirigé après 2 secondes. <a href="Login">Je suis pressé!</a>
+        <br/>Vous allez être automatiquement redirigé après 2 secondes. <a href="login">Je suis pressé!</a>
         <script>
-            console.log("hi")
-            setTimeout(()=>{document.location.href="/Home"}, 2000);
+            setTimeout(()=>{document.location.href="/home"}, 2000);
+        </script>
+        <?php
+        break;
+    case LoginViewStateEnum::Logout:
+        echo "Déconnecté avec succès.";
+        ?>
+        <br/>Vous allez être automatiquement redirigé après 2 secondes. <a href="login">Je suis pressé!</a>
+        <script>
+            setTimeout(()=>{document.location.href="/auth/login"}, 2000);
         </script>
         <?php
         break;
@@ -18,25 +26,26 @@ switch ($this->data->viewState)
     case LoginViewStateEnum::InProgress:
     default:
         ?>
-        <div>
+        <div class="sub-page">
             <h2>
                 Vous avez déjà un compte? Connnectez-vous ci-dessous!
             </h2>
+            <?php
+            if($this->data->viewState == LoginViewStateEnum::FailedServer) echo "Impossible de vous connecter avec ces identifiants! <a href='/auth/register'>Pas de compte? C'est par ici!</a><br/>";
+            ?>
             <form method="POST" action="">
                 <label>
-                    Email
+                    <span>Email</span>
                     <input type="email" name="email" placeholder="Email" required>
                 </label>
                 <label>
-                    Password
-                    <input type="password" name="password" placeholder="Password" required>
+                    <span>Mot de passe</span>
+                    <input type="password" name="password" placeholder="Mot de passe" required>
                 </label>
-                <button type="submit">Register</button>
+                <button type="submit">Connexion</button>
             </form>
-            <?php
-                if($this->data->viewState == LoginViewStateEnum::FailedServer) echo "We couldn't log you in using these credentials! <br/>";
-            ?>
-            <a href="/Auth/Register">Pas de compte? C'est par ici!</a>
+
+
         </div>
 
         <?php

@@ -9,5 +9,8 @@ namespace Models
     {
         public string $pageSubTitle;
         public array $cssIncludes;
+        public string $displayName;
+        public bool $isLoggedIn;
+        public bool $isAdmin;
     }
 }
