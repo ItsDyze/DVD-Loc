@@ -24,6 +24,14 @@ jobs:
         --exclude '.git' --exclude '.github' \
         ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/c218/
 
+    - name: Environment variables
+      run: |
+        echo "DBName${{secrets.DBName}}" >> $GITHUB_ENV
+        echo "DBName${{secrets.Host}}" >> $GITHUB_ENV
+        echo "DBName${{secrets.Pass}}" >> $GITHUB_ENV
+        echo "DBName${{secrets.User}}" >> $GITHUB_ENV
+        echo "DBName${{secrets.SecurityKey}}" >> $GITHUB_ENV
+
     - name: Build and restart Docker Compose
       run: |
         ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
