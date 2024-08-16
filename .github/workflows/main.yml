@@ -1,0 +1,40 @@
+name: Deploy Docker Compose App to Private Server
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Copy files to the server
+      run: |
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }}" \
+        --exclude '.git' --exclude '.github' \
+        ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/c218/
+
+    - name: Build and restart Docker Compose
+      run: |
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          cd /tmp/c218/ &&
+          docker-compose down &&
+          docker-compose up -d --build &&
+          docker image prune -f
+        "
+
+    - name: Clean up application files
+      run: |
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          rm -rf /tmp/c218/*
+        "
