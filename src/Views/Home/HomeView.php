@@ -2,8 +2,8 @@
 namespace Views\Home
 {
 
-    use Models\HomeViewModel;
-    use Models\LayoutViewModel;
+    use Models\ViewModels\HomeViewModel;
+    use Models\ViewModels\LayoutViewModel;
     use Views\BaseView;
 
     class HomeView extends BaseView

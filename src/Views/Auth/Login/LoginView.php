@@ -2,8 +2,8 @@
 namespace Views\Auth\Login
 {
 
-    use Models\LayoutViewModel;
-    use Models\LoginViewModel;
+    use Models\ViewModels\LayoutViewModel;
+    use Models\ViewModels\LoginViewModel;
     use Views\BaseView;
 
     class LoginView extends BaseView

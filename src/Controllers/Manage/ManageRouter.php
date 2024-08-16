@@ -35,6 +35,10 @@ namespace Controllers\Manage
                     $controller = new ManageDashboardController();
                     $controller->handle();
                     break;
+                case 'dvd' :
+                    $controller = new ManageDVDController();
+                    $controller->handle();
+                    break;
                 default:
                     throw new RouteNotFoundException("Manage");
                     break;

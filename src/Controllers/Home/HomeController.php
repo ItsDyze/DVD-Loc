@@ -2,7 +2,7 @@
 namespace Controllers\Home
 {
 
-    use Models\HomeViewModel;
+    use Models\ViewModels\HomeViewModel;
     use Views\Home\HomeView;
 
     class HomeController {

@@ -48,17 +48,10 @@ namespace Services
                 {
                     return $result;
                 }
-                else
-                {
-                    error_log("Failed to authenticate using provided credentials");
-                    return null;
-                }
             }
-            else
-            {
-                error_log("Failed to authenticate using provided credentials");
-                return null;
-            }
+
+            error_log("Failed to authenticate using provided credentials");
+            return null;
         }
 
     }

@@ -3,17 +3,24 @@
 namespace Controllers\Manage
 {
 
-    use Models\DashboardViewModel;
     use Models\Exceptions\BadRouteException;
     use Models\Exceptions\RouteNotFoundException;
+    use Models\QueryModel\DVDQueryModel;
+    use Models\ViewModels\DashboardViewModel;
+    use Services\DVDService;
     use Views\Manage\Dashboard\DashboardView;
 
     class ManageDashboardController
     {
         public function index(): void
         {
-
-            new DashboardView(new DashboardViewModel());
+            $viewModel = new DashboardViewModel();
+            $service = DVDService::getInstance();
+            $queryModel = new DVDQueryModel();
+            $queryModel->IsOffered=true;
+            $viewModel->DVDCount = $service->getDVDCount();
+            $viewModel->OfferedDVDCount = $service->getDVDCount($queryModel);
+            new DashboardView($viewModel);
         }
 
 

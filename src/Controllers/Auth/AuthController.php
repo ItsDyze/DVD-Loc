@@ -2,16 +2,14 @@
     namespace Controllers\Auth
     {
 
-        use Controllers\Home\HomeController;
-        use HttpRequestException;
         use Models\Exceptions\BadRouteException;
         use Models\Exceptions\RouteNotFoundException;
         use Models\JWTModel;
-        use Models\LoginViewModel;
-        use Models\LoginViewStateEnum;
-        use Models\RegisterViewModel;
-        use Models\RegisterViewStateEnum;
         use Models\UserModel;
+        use Models\ViewModels\LoginViewModel;
+        use Models\ViewModels\LoginViewStateEnum;
+        use Models\ViewModels\RegisterViewModel;
+        use Models\ViewModels\RegisterViewStateEnum;
         use Services\AuthService;
         use Utils\JWTUtils;
         use Views\Auth\Login\LoginView;

@@ -36,6 +36,7 @@ CREATE TABLE Types
 (
     Id          INT         NOT NULL UNIQUE AUTO_INCREMENT,
     Name        VARCHAR(50) NOT NULL,
+    NameLocal   VARCHAR(50) NOT NULL,
     CustomOrder INT,
     PRIMARY KEY (Id)
 );
@@ -44,6 +45,7 @@ CREATE TABLE Genres
 (
     Id          INT         NOT NULL UNIQUE AUTO_INCREMENT,
     Name        VARCHAR(50) NOT NULL,
+    NameLocal   VARCHAR(50) NOT NULL,
     CustomOrder INT,
     PRIMARY KEY (Id)
 );
@@ -104,6 +106,7 @@ CREATE TABLE DVDs
     Synopsis        TEXT,
     Notation        INT,
     Note            TEXT,
+    Year            INT,
     Certification   NVARCHAR(10),
     IsOffered       BOOL NOT NULL,
     Quantity        INT NOT NULL,

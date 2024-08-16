@@ -13,6 +13,7 @@
     </style>
     <div class="wrapper">
         <header>
+            <?php include "Components/Menu.template.php"; ?>
             <h1><a href="/">DVD-Loc</a></h1>
             <?php
                 if(!$this->layoutData->isLoggedIn)

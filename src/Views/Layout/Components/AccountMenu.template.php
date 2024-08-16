@@ -1,6 +1,6 @@
 <div class="user-menu">
     <div class="user" title="Hi <?php echo $this->layoutData->displayName; ?>">
-        <img src="./assets/person.svg">
+        <img src="/assets/person.svg">
     </div>
     <ul class="menu-items">
         <li><a href="/home">Home</a></li>

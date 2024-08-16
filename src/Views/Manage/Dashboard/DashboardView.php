@@ -2,8 +2,8 @@
 namespace Views\Manage\Dashboard
 {
 
-    use Models\DashboardViewModel;
-    use Models\LayoutViewModel;
+    use Models\ViewModels\DashboardViewModel;
+    use Models\ViewModels\LayoutViewModel;
     use Views\BaseView;
 
     class DashboardView extends BaseView

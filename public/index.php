@@ -6,8 +6,8 @@ use Middlewares\Routing;
 
 date_default_timezone_set('Europe/Paris');
 
-define( "SRC" , dirname(__FILE__, 2) . "\src\\" );
-define( "ASSETS" , dirname( __FILE__ ) . "\assets\\" );
+define( "SRC" , dirname(__FILE__, 2) . "/src/" );
+define( "ASSETS" , dirname( __FILE__ ) . "/assets/" );
 define( "IS_DEV" , strtolower($_SERVER['HTTP_HOST']) == "c218");
 
 #Autoload

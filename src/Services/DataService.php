@@ -4,6 +4,7 @@ namespace Services {
 
     use PDO;
     use PDOException;
+    use Utils\Query\QueryUtils;
 
     class DataService extends SingletonBaseService
     {
@@ -93,6 +94,15 @@ namespace Services {
             return $query->execute($parameters);
         }
 
+        protected function fetchValue($statement, $parameters)
+        {
+            $this->validateStatementAndParameters($statement, $parameters);
+
+            $query = $this->GetDBContext()->prepare($statement);
+            $query->execute($parameters);
+            return $query->fetchColumn();
+        }
+
         protected function fetchStatement($statement, $parameters)
         {
             $this->validateStatementAndParameters($statement, $parameters);
@@ -102,9 +112,21 @@ namespace Services {
             return $query->fetch(PDO::FETCH_OBJ);
         }
 
+        protected function fetchAllStatement($statement, $parameters)
+        {
+            $this->validateStatementAndParameters($statement, $parameters);
+
+            $query = $this->GetDBContext()->prepare($statement);
+            $query->execute($parameters);
+            return $query->fetchAll(PDO::FETCH_OBJ);
+        }
+
         private function validateStatementAndParameters($statement, $parameters): void
         {
-            if (substr_count($statement, "?") == array_count_values($parameters))
+            $requiredParameters = substr_count($statement, "?");
+            $providedParameters = count($parameters) ?? 0;
+
+            if ($requiredParameters != $providedParameters)
             {
                 echo "Too few or too many parameters for the provided statement";
                 die();

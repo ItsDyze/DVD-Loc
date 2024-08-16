@@ -1,6 +1,6 @@
 <?php
 
-use Models\RegisterViewStateEnum;
+use Models\ViewModels\RegisterViewStateEnum;
 
 switch ($this->data->viewState)
     {
@@ -24,19 +24,19 @@ switch ($this->data->viewState)
 ?>
 <form method="POST" action="">
     <label>
-        Last name
+        <span>Last name</span>
         <input type="text" name="LastName" placeholder="Last name" required>
     </label>
     <label>
-        First name
+        <span>First name</span>
         <input type="text" name="FirstName" placeholder="First Name" required>
     </label>
     <label>
-        Email
+        <span>Email</span>
         <input type="email" name="Email" placeholder="Email" required>
     </label>
     <label>
-        Password
+        <span>Password</span>
         <input type="password" name="Password" placeholder="Password" required>
     </label>
     <button type="submit">Register</button>

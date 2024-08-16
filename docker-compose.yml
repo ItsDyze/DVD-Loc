@@ -1,0 +1,44 @@
+services:
+  webapp:
+    build: .
+    ports:
+      - "8089:80"
+    environment:
+      C218_DataStore_DBName: ${DBName}
+      C218_DataStore_Host: ${Host}
+      C218_DataStore_Pass: ${Pass}
+      C218_DataStore_User: ${User}
+      C218_SecurityKey: ${SecurityKey}
+    links:
+      - db
+    networks:
+      - default
+
+  db:
+    image: mysql
+    command: --lower_case_table_names=1
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DBName}
+      MYSQL_USER: ${User}
+      MYSQL_PASSWORD: ${Password}
+      MYSQL_ROOT_PASSWORD: ${RootPassword}
+    volumes:
+      - ./scripts/dump:/docker-entrypoint-initdb.d
+      - persistent:/var/lib/mysql
+    networks:
+      - default
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - 8088:80
+    environment:
+      MYSQL_USER: ${User}
+      MYSQL_PASSWORD: ${Password}
+      MYSQL_ROOT_PASSWORD: ${RootPassword}
+volumes:
+  persistent:

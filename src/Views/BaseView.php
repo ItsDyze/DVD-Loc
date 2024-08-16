@@ -4,7 +4,7 @@ namespace Views
 {
 
     use Interfaces\IViewModel;
-    use Models\LayoutViewModel;
+    use Models\ViewModels\LayoutViewModel;
     use Utils\JWTUtils;
 
     abstract class BaseView

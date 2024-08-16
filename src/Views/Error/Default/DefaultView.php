@@ -4,7 +4,7 @@ namespace Views\Error\Default
 {
 
     use Models\ErrorModel;
-    use Models\LayoutViewModel;
+    use Models\ViewModels\LayoutViewModel;
     use Views\BaseView;
 
     class DefaultView extends BaseView

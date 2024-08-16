@@ -2,8 +2,8 @@
 namespace Views\Auth\Register
 {
 
-    use Models\LayoutViewModel;
-    use Models\RegisterViewModel;
+    use Models\ViewModels\LayoutViewModel;
+    use Models\ViewModels\RegisterViewModel;
     use Views\BaseView;
 
     class RegisterView extends BaseView

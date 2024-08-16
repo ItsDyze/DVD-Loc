@@ -4,7 +4,7 @@ namespace Views\Error\Unauthorized
 
 
     use Interfaces\IViewModel;
-    use Models\LayoutViewModel;
+    use Models\ViewModels\LayoutViewModel;
     use Views\BaseView;
 
     class UnauthorizedView extends BaseView
