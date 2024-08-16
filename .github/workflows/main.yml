@@ -35,11 +35,11 @@ jobs:
 
     - name: Environment variables
       run: |
-        echo "DBName${{secrets.DBName}}" >> $GITHUB_ENV
-        echo "Host{{secrets.Host}}" >> $GITHUB_ENV
-        echo "Password{{secrets.Password}}" >> $GITHUB_ENV
-        echo "User{{secrets.User}}" >> $GITHUB_ENV
-        echo "SecurityKey{{secrets.SecurityKey}}" >> $GITHUB_ENV
+        echo "DBName=${{secrets.DBName}}" >> $GITHUB_ENV
+        echo "Host=${{secrets.Host}}" >> $GITHUB_ENV
+        echo "Password=${{secrets.Password}}" >> $GITHUB_ENV
+        echo "User=${{secrets.User}}" >> $GITHUB_ENV
+        echo "SecurityKey=${{secrets.SecurityKey}}" >> $GITHUB_ENV
 
     - name: Build and restart Docker Compose
       run: |
