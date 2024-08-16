@@ -15,6 +15,11 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up SSH
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+        echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add private_key.pem
+      env:
+        SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
