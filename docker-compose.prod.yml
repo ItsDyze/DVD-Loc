@@ -6,7 +6,7 @@ services:
     environment:
       C218_DataStore_DBName: ${DBName}
       C218_DataStore_Host: ${Host}
-      C218_DataStore_Pass: ${Pass}
+      C218_DataStore_Pass: ${Password}
       C218_DataStore_User: ${User}
       C218_SecurityKey: ${SecurityKey}
     links:
