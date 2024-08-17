@@ -52,6 +52,5 @@ jobs:
       run: |
         ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           rm -rf /tmp/c218/*
-          rm /tmp/c218
         "
         rm private_key.pem
