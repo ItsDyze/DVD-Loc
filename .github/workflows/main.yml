@@ -28,19 +28,17 @@ jobs:
         --exclude '.git' --exclude '.github' \
         ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/c218/
 
-    - name: Environment variables
-      run: |
-        echo "DBName=${{secrets.DBName}}" >> $GITHUB_ENV
-        echo "Host=${{secrets.Host}}" >> $GITHUB_ENV
-        echo "Password=${{secrets.Password}}" >> $GITHUB_ENV
-        echo "User=${{secrets.User}}" >> $GITHUB_ENV
-        echo "SecurityKey=${{secrets.SecurityKey}}" >> $GITHUB_ENV
-
     - name: Build and restart Docker Compose
       run: |
         ssh -i private_key.pem -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           cd /tmp/c218/ &&
           if [ -f docker-compose.prod.yml ]; then
+            export DBName=${{ secrets.DBName }} &&
+            export Host=${{ secrets.Host }} &&
+            export Password=${{ secrets.Password }} &&
+            export User=${{ secrets.User }} &&
+            export SecurityKey=${{ secrets.SecurityKey }} &&
+            export RootPassword=${{ secrets.RootPassword }} &&
             docker-compose -f docker-compose.prod.yml down &&
             docker-compose -f docker-compose.prod.yml up -d --build &&
             docker image prune -f
