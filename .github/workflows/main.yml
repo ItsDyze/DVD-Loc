@@ -24,8 +24,7 @@ jobs:
 
     - name: Copy files to the server
       run: |
-        mkdir /tmp/c218/
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no " \
+        rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no " \
         --exclude '.git' --exclude '.github' \
         ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/c218/
 
@@ -39,7 +38,7 @@ jobs:
 
     - name: Build and restart Docker Compose
       run: |
-        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+        ssh -i private_key.pem -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           cd /tmp/c218/ &&
           docker-compose down &&
           docker-compose up -d --build &&
@@ -48,7 +47,7 @@ jobs:
 
     - name: Clean up application files
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+        ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           rm -rf /tmp/c218/*
           rm /tmp/c218
         "
