@@ -21,12 +21,11 @@ jobs:
        eval $(ssh-agent -s)
        ssh-add private_key.pem
        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'SSH connection successful!'"
-       rm private_key.pem
 
     - name: Copy files to the server
       run: |
         mkdir /tmp/c218/
-        rsync -avz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }}" \
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no " \
         --exclude '.git' --exclude '.github' \
         ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/c218/
 
@@ -49,7 +48,8 @@ jobs:
 
     - name: Clean up application files
       run: |
-        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           rm -rf /tmp/c218/*
           rm /tmp/c218
         "
+        rm private_key.pem
