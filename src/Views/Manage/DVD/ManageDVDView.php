@@ -3,17 +3,17 @@
 namespace Views\Manage\DVD
 {
 
-    use Models\ViewModels\DVDViewModel;
+    use Models\ViewModels\ManageDVDViewModel;
     use Models\ViewModels\LayoutViewModel;
     use Views\BaseView;
 
-    class DVDView extends BaseView
+    class ManageDVDView extends BaseView
     {
-        private DVDViewModel $data;
+        private ManageDVDViewModel $data;
 
-        function __construct(DVDViewModel $viewModel)
+        function __construct(ManageDVDViewModel $viewModel)
         {
-            $this->viewName="Manage/DVD/DVDView";
+            $this->viewName="Manage/DVD/ManageDVDView";
             $this->subTitle="DVD";
 
             $this->data = $viewModel;
@@ -24,7 +24,7 @@ namespace Views\Manage\DVD
         {
             $layoutData = new LayoutViewModel();
             $layoutData -> pageSubTitle = $this->subTitle;
-            parent::renderLayout($layoutData, $this->data);
+            parent::renderLayout($layoutData, $this->data, true);
         }
     }
 }

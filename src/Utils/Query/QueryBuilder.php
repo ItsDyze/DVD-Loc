@@ -10,12 +10,16 @@ namespace Utils\Query
         protected array $where = [];
         protected int|null $limit;
         protected int|null $offset;
+        protected string|null $orderBy;
+        protected bool|null $orderDesc;
         protected array $params;
 
         function __construct()
         {
             $this->limit = null;
             $this->offset = null;
+            $this->orderDesc = null;
+            $this->orderBy = null;
             $this->params = [];
         }
 
@@ -35,11 +39,15 @@ namespace Utils\Query
             return $this;
         }
 
-        public function limit($offset, $limit) {
+        public function limit(int $offset, int $limit) {
             $this->limit = $limit;
             $this->offset = $offset;
-            $this->params[] = $offset;
-            $this->params[] = $limit;
+            return $this;
+        }
+
+        public function orderBy(string $column, bool $descending = true) {
+            $this->orderDesc = $descending;
+            $this->orderBy = $column;
             return $this;
         }
 
@@ -48,9 +56,13 @@ namespace Utils\Query
             if (!empty($this->where)) {
                 $sql .= " WHERE " . implode(' AND ', $this->where);
             }
-            if ($this->limit) {
-                $sql .= " LIMIT ?, ?";
+            if ($this->orderBy !== "" && $this->orderDesc !== null) {
+                $sql .= " ORDER BY $this->orderBy " . ($this->orderDesc ? 'DESC' : 'ASC') . " ";
             }
+            if ($this->limit) {
+                $sql .= " LIMIT $this->offset, $this->limit";
+            }
+            $sql .= ";";
             $result = new QueryModel();
             $result->sql = $sql;
             $result->params = $this->params;

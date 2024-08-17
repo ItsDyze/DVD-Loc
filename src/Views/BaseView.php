@@ -12,12 +12,13 @@ namespace Views
         protected string $viewName;
         protected string $subTitle;
         protected string $subContent;
+        protected string $subScripts;
         public LayoutViewModel $layoutData;
         protected string $cssInclude;
 
         protected abstract function render();
 
-        protected function renderLayout(LayoutViewModel $viewModel, IVIewModel|null $contentData): void
+        protected function renderLayout(LayoutViewModel $viewModel, IVIewModel|null $contentData, bool $hasJS = false): void
         {
             if(!isset($this->viewName))
             {
@@ -38,9 +39,24 @@ namespace Views
                 $this->layoutData->isLoggedIn = false;
             }
 
+            if($hasJS)
+            {
+                $this->subScripts = $this->loadJS($this->viewName);
+            }
+            else
+            {
+                $this->subScripts = "";
+            }
             $this->subContent = $this->loadView($this->viewName, $contentData);
             $this->cssInclude = $this->loadCSS($this->viewName, $contentData);
             require "Layout/LayoutView.template.php";
+        }
+
+        protected function loadJS(string $viewFiles): string
+        {
+            ob_start();
+            include $viewFiles . ".js";
+            return ob_get_clean();
         }
 
         protected function loadView(string $viewFiles, IViewModel|null $pData): string

@@ -22,9 +22,15 @@ namespace Services
                 ->from("dvds");
             if($queryModel)
             {
-                if($queryModel->IsOffered != null)
+                if($queryModel->IsOffered !== null)
                 {
                     $queryBuilder->where("IsOffered", "=", $queryModel->IsOffered);
+                }
+
+                if($queryModel->Search !== null)
+                {
+                    $queryBuilder->where("Title", "LIKE", "%" . $queryModel->Search. "%");
+                    $queryBuilder->where("LocalTitle", "LIKE", "%" . $queryModel->Search. "%");
                 }
             }
 
@@ -40,27 +46,51 @@ namespace Services
             return 0;
         }
 
-        public function getDVDs(DVDQueryModel $query): array
+        public function getDVDs(DVDQueryModel $queryModel): array
         {
             $result = array();
-            $query = "SELECT Id, Title, LocalTitle, Synopsis, Notation, Note, Certification, IsOffered, Quantity, Price, Year FROM dvds LIMIT ?, ?;";
+            $queryBuilder = (new QueryBuilder())
+                ->select(["Id", "Title", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "IsOffered", "Quantity", "Price", "Year"])
+                ->from("dvds")
+                ->limit($queryModel->Offset, $queryModel->Limit);
 
-            $values = array(
-                $offset = $query->offset,
-                $limit = $query->limit
-            );
+            if($queryModel->IsOffered !== null)
+            {
+                $queryBuilder->where("IsOffered", "=", $queryModel->IsOffered);
+            }
 
-            $queryResult = $this->fetchAllStatement($query, $values);
+            if($queryModel->Search !== null)
+            {
+                $queryBuilder->where("Title", "LIKE", "%" . $queryModel->Search. "%");
+                $queryBuilder->where("LocalTitle", "LIKE", "%" . $queryModel->Search. "%");
+            }
 
-            if($queryResult && array_count_values($queryResult) > 0)
+            if($queryModel->OrderBy !== null &&
+                $queryModel->OrderBy !== "" &&
+                $this->isAllowedOrderColumn($queryModel->OrderBy))
+            {
+                $queryBuilder->orderBy($queryModel->OrderBy, $queryModel->OrderDesc);
+            }
+
+            $query = $queryBuilder->getQuery();
+
+            $queryResult = $this->fetchAllStatement($query->sql, $query->params);
+
+            if($queryResult && count($queryResult) > 0)
             {
                 foreach($queryResult as $row)
                 {
-                    array_push($result, $row);
+                    $result[] = $row;
                 }
             }
 
             return $result;
+        }
+
+        function isAllowedOrderColumn(string $column): bool
+        {
+            $allowedOrderColumns = array("Quantity", "Year", "Title", "IsOffered", "Price");
+            return in_array($column, $allowedOrderColumns);
         }
     }
 }

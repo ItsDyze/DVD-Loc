@@ -6,21 +6,34 @@ namespace Controllers\Manage
     use Models\Exceptions\BadRouteException;
     use Models\Exceptions\RouteNotFoundException;
     use Models\QueryModel\DVDQueryModel;
-    use Models\ViewModels\DVDViewModel;
+    use Models\ViewModels\ManageDVDViewModel;
     use Services\DVDService;
-    use Views\Manage\DVD\DVDView;
+    use Views\Manage\DVD\ManageDVDView;
 
     class ManageDVDController
     {
         public function index()
         {
-            $viewModel = new DVDViewModel();
+            $viewModel = new ManageDVDViewModel();
             $service = DVDService::getInstance();
+
             $queryModel = new DVDQueryModel();
-            $queryModel->IsOffered=true;
+            if(!empty($_GET))
+            {
+                $queryModel->setFromQueryString($_GET);
+            }
+            else
+            {
+                header('Location: ' . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)."?".$queryModel->getQueryString(), true, 303);
+                die();
+            }
+
             $viewModel->Query = $queryModel;
             $viewModel->FilteredCount = $service->getDVDCount($queryModel);
-            new DVDView($viewModel);
+            $viewModel->DVDs = $service->getDVDs($queryModel);
+            $viewModel->TotalPages = ceil($viewModel->FilteredCount / $queryModel->Limit);
+            $viewModel->CurrentPage = ($queryModel->Offset / $queryModel->Limit) + 1;
+            new ManageDVDView($viewModel);
         }
 
         /**

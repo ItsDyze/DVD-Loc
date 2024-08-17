@@ -4,8 +4,8 @@ namespace Models\QueryModel
 {
     class BaseQueryModel
     {
-        public int $limit = 10;
-        public int $offset = 0;
+        public int $Limit = 10;
+        public int $Offset = 0;
     }
 }
 
