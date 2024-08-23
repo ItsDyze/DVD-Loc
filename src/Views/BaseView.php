@@ -16,7 +16,7 @@ namespace Views
         public LayoutViewModel $layoutData;
         protected string $cssInclude;
 
-        protected abstract function render();
+        public abstract function render();
 
         protected function renderLayout(LayoutViewModel $viewModel, IVIewModel|null $contentData, bool $hasJS = false): void
         {

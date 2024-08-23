@@ -15,10 +15,9 @@ namespace Views\Auth\Register
             $this->viewName="Auth/Register/RegisterView";
             $this->subTitle="Register";
             $this->data = $dataModel;
-            $this->render();
         }
 
-        protected function render(): void
+        public function render(): void
         {
             $layoutData = new LayoutViewModel();
             $layoutData -> pageSubTitle = $this->subTitle;

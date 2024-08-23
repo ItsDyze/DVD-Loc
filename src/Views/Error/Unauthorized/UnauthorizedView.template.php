@@ -1,3 +1,0 @@
-<p>
-    Vous n'avez pas accès à cette page
-</p>

@@ -17,10 +17,9 @@ namespace Views\Auth\Login
             $this->viewName="Auth/Login/LoginView";
             $this->subTitle="Login";
             $this->data = $dataModel;
-            $this->render();
         }
 
-        protected function render(): void
+        public function render(): void
         {
             $layoutData = new LayoutViewModel();
             $layoutData -> pageSubTitle = $this->subTitle;

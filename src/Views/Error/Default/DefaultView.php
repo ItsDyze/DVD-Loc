@@ -18,10 +18,9 @@ namespace Views\Error\Default
             $this->viewName="Error/Default/DefaultView";
             $this->subTitle="Server Error";
 
-            $this->render();
         }
 
-        protected function render(): void
+        public function render(): void
         {
             $layoutData = new LayoutViewModel();
             $layoutData -> pageSubTitle = $this->subTitle;

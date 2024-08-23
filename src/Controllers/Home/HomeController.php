@@ -2,18 +2,16 @@
 namespace Controllers\Home
 {
 
+    use Controllers\BaseController;
     use Models\ViewModels\HomeViewModel;
     use Views\Home\HomeView;
 
-    class HomeController {
-        public function index(): void
+    class HomeController extends BaseController {
+        public function get(): void
         {
-            if($_SERVER['REQUEST_METHOD'] !== 'GET')
-            {
-                http_response_code(405);
-            }
             $data = new HomeViewModel();
-            new HomeView($data);
+            $view = new HomeView($data);
+            $view->render();
         }
     }
 }

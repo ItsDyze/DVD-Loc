@@ -3,6 +3,7 @@
 namespace Controllers\Manage
 {
 
+    use Controllers\BaseController;
     use Models\DVDModel;
     use Models\Exceptions\BadRouteException;
     use Models\Exceptions\RouteNotFoundException;
@@ -14,21 +15,22 @@ namespace Controllers\Manage
     use Views\Manage\DVD\Detail\ManageDVDDetailView;
     use Views\Manage\DVD\List\ManageDVDListView;
 
-    class ManageDVDController
+    class ManageDVDController extends BaseController
     {
-        public function index(int $dvd = -1): void
+
+        public function get(int $id = null): void
         {
-            if ($dvd > -1)
+            if($id === null)
             {
-                $this->indexDetail($dvd);
+                $this->getAll();
             }
             else
             {
-                $this->indexList();
+                $this->getById($id);
             }
         }
 
-        private function indexList()
+        public function getAll():void
         {
             $viewModel = new ManageDVDListViewModel();
             $service = DVDService::getInstance();
@@ -49,39 +51,20 @@ namespace Controllers\Manage
             $viewModel->DVDs = $service->getDVDs($queryModel);
             $viewModel->TotalPages = ceil($viewModel->FilteredCount / $queryModel->Limit);
             $viewModel->CurrentPage = ($queryModel->Offset / $queryModel->Limit) + 1;
-            new ManageDVDListView($viewModel);
+
+            $controller = new ManageDVDListView($viewModel);
+            $controller->render();
         }
 
-        private function indexDetail($dvd)
+        private function getById($id): void
         {
             $viewModel = new ManageDVDDetailViewModel();
             $service = DVDService::getInstance();
 
-            $viewModel->DVD = PHPUtils::objectToObject($service->getDVDById($dvd), DVDModel::class);
+            $viewModel->DVD = $service->getDVDById($id);
 
-            new ManageDVDDetailView($viewModel);
-        }
-
-        /**
-         * @throws BadRouteException
-         * @throws RouteNotFoundException
-         */
-        public function handle(): void
-        {
-            $requestedController = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-            if(empty($requestedController))
-            {
-                throw new BadRouteException("Manage/DVD");
-            }
-
-            if(isset($requestedController[3]) && is_int(intval($requestedController[3])))
-            {
-                $this->index(intval($requestedController[3]));
-            }
-            else
-            {
-                 $this->index();
-            }
+            $controller = new ManageDVDDetailView($viewModel);
+            $controller->render();
         }
     }
 }

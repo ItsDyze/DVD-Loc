@@ -136,3 +136,13 @@ button:disabled {
     margin: 15px 32px;
 
 }
+
+@media only screen and (max-width: 1024px) {
+    .container .side-nav {
+        display: none;
+    }
+
+    .container .form {
+        width: 100%;
+    }
+}

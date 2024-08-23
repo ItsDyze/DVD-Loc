@@ -14,12 +14,10 @@ namespace Views\Home
         {
             $this->viewName="Home/HomeView";
             $this->subTitle="Home";
-
             $this->data = $viewModel;
-            $this->render();
         }
 
-        protected function render(): void
+        public function render(): void
         {
             $layoutData = new LayoutViewModel();
             $layoutData -> pageSubTitle = $this->subTitle;
