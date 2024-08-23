@@ -12,7 +12,7 @@ namespace Controllers\Manage
 
     class ManageDVDController
     {
-        public function index()
+        public function index(int $dvd = -1)
         {
             $viewModel = new ManageDVDViewModel();
             $service = DVDService::getInstance();
@@ -36,29 +36,6 @@ namespace Controllers\Manage
             new ManageDVDView($viewModel);
         }
 
-        public function index(int $dvdId)
-        {
-            $viewModel = new ManageDVDViewModel();
-            $service = DVDService::getInstance();
-
-            $queryModel = new DVDQueryModel();
-            if(!empty($_GET))
-            {
-                $queryModel->setFromQueryString($_GET);
-            }
-            else
-            {
-                header('Location: ' . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)."?".$queryModel->getQueryString(), true, 303);
-                die();
-            }
-
-            $viewModel->Query = $queryModel;
-            $viewModel->FilteredCount = $service->getDVDCount($queryModel);
-            $viewModel->DVDs = $service->getDVDs($queryModel);
-            $viewModel->TotalPages = ceil($viewModel->FilteredCount / $queryModel->Limit);
-            $viewModel->CurrentPage = ($queryModel->Offset / $queryModel->Limit) + 1;
-            new ManageDVDView($viewModel);
-        }
 
         /**
          * @throws BadRouteException
