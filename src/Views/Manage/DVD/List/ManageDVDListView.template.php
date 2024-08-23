@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         <?php foreach ($data->DVDs as $row): ?>
-            <tr>
+            <tr class="clickable" onclick="document.location.href='/manage/dvd/<?php echo $row->Id; ?>'" >
                 <th scope="row"><?php echo $row->LocalTitle; ?></th>
                 <th scope="col" class="col-short"><?php echo $row->Year; ?></th>
                 <th scope="col" class="col-short"><?php echo $row->IsOffered; ?></th>

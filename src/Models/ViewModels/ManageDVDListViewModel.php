@@ -6,7 +6,7 @@ namespace Models\ViewModels
     use Interfaces\IViewModel;
     use Models\QueryModel\DVDQueryModel;
 
-    class ManageDVDViewModel implements IViewModel
+    class ManageDVDListViewModel implements IViewModel
     {
         public array $DVDs;
         public int $FilteredCount;

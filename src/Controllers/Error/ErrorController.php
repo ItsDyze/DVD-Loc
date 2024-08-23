@@ -3,6 +3,7 @@ namespace Controllers\Error
 {
 
 
+    use Models\ErrorModel;
     use Models\Exceptions\BadRouteException;
     use Views\Error\Default\DefaultView;
     use Views\Error\Unauthorized\UnauthorizedView;
@@ -16,7 +17,9 @@ namespace Controllers\Error
 
         public function serverError($exception): void
         {
-            new DefaultView($exception);
+            $errorModel = new ErrorModel();
+            $errorModel->exception = $exception;
+            new DefaultView($errorModel);
         }
 
         public function handle(): void

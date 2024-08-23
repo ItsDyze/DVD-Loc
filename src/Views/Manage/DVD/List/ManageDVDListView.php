@@ -1,19 +1,19 @@
 <?php
 
-namespace Views\Manage\DVD
+namespace Views\Manage\DVD\List
 {
 
-    use Models\ViewModels\ManageDVDViewModel;
     use Models\ViewModels\LayoutViewModel;
+    use Models\ViewModels\ManageDVDListViewModel;
     use Views\BaseView;
 
-    class ManageDVDView extends BaseView
+    class ManageDVDListView extends BaseView
     {
-        private ManageDVDViewModel $data;
+        private ManageDVDListViewModel $data;
 
-        function __construct(ManageDVDViewModel $viewModel)
+        function __construct(ManageDVDListViewModel $viewModel)
         {
-            $this->viewName="Manage/DVD/ManageDVDView";
+            $this->viewName="Manage/DVD/List/ManageDVDListView";
             $this->subTitle="DVD";
 
             $this->data = $viewModel;

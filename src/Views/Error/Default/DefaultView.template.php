@@ -5,5 +5,5 @@
 
 if( IS_DEV )
 {
-    echo '<p>var_dump($data)</p>';
+    echo '<p>' . var_dump($data->exception->getMessage()) .'</p>';
 }

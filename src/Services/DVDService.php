@@ -87,6 +87,27 @@ namespace Services
             return $result;
         }
 
+        public function getDVDById($id)
+        {
+            $result = array();
+            $queryBuilder = (new QueryBuilder())
+                ->select(["Id", "Title", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "IsOffered", "Quantity", "Price", "Year"])
+                ->from("dvds")
+                ->where("Id", "=", $id);
+
+            $query = $queryBuilder->getQuery();
+
+            $queryResult = $this->fetchAllStatement($query->sql, $query->params);
+
+            if($queryResult && count($queryResult) == 1)
+            {
+
+                return (object)$queryResult[0];
+            }
+
+            return null;
+        }
+
         function isAllowedOrderColumn(string $column): bool
         {
             $allowedOrderColumns = array("Quantity", "Year", "Title", "IsOffered", "Price");

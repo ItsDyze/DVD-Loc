@@ -62,3 +62,7 @@ a
 {
     color: #B3B3B3;
 }
+
+.clickable{
+    cursor: pointer;
+}
