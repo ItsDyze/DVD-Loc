@@ -31,14 +31,11 @@ main {
     display: flex;
     flex: 9;
     padding: 50px;
-    overflow-y: auto;
+    overflow: hidden;
     flex-direction: column;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
+
 
 footer {
     flex: 0.5;

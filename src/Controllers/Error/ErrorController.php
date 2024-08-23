@@ -12,11 +12,19 @@ namespace Controllers\Error
 
         public function unauthorized(): void
         {
+            if($_SERVER['REQUEST_METHOD'] !== 'GET')
+            {
+                http_response_code(405);
+            }
             new UnauthorizedView();
         }
 
         public function serverError($exception): void
         {
+            if($_SERVER['REQUEST_METHOD'] !== 'GET')
+            {
+                http_response_code(405);
+            }
             $errorModel = new ErrorModel();
             $errorModel->exception = $exception;
             new DefaultView($errorModel);

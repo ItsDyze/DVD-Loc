@@ -4,10 +4,10 @@ class FormTextComponent
 {
     public string $name;
     public string $label;
-    public string $value;
-    public string $placeholder;
+    public ?string $value;
+    public ?string $placeholder;
 
-    public function __construct(string $name, string $label, string $value = "", string $placeholder = "")
+    public function __construct(string $name, string $label, ?string $placeholder = null, ?string $value = "", bool $required = true, bool $readOnly = false)
     {
         $this->name = $name;
         $this->label = $label;

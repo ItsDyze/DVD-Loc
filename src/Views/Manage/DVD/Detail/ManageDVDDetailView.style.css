@@ -1,127 +1,138 @@
-h2
-{
-    margin: 20px auto;
+
+.custom-link {
+    color: #B3B3B3;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+    font-size: 14px;
 }
 
-table {
-    width: 80%;
-    max-width: 1200px;
+.custom-link:hover {
+    color: #FFFFFF;
+}
+
+.dvd-page {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     margin: 0 auto;
-    border-collapse: collapse;
-    background-color: #3C3F58; /* Slightly lighter than the background */
+    justify-content: space-around;
+}
+
+.dvd-page .nav {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+
+    background-color: #2E3440;
+    padding: 20px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: #FFF; /* White text for contrast */
+    margin: 15px 32px;
 }
 
-thead {
-    background-color: #FF6F61; /* Retro orange color */
-    color: #FFF;
+.dvd-page form {
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
 }
 
-th, td {
-    padding: 12px 15px;
+.dvd-page .form h3{
     text-align: left;
-    border-bottom: 1px solid #4C506A; /* Slightly lighter shade for borders */
 }
 
-thead tr th {
-    text-align: center;
+.dvd-page-section {
+    background-color: #2E3440;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15px 32px;
+}
+
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #D8DEE9;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    background: #434C5E;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: #ECEFF4;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    background: #4C566A;
+    outline: none;
+}
+
+button {
+    background: #81A1C1;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
     cursor: pointer;
+    transition: background 0.3s ease;
+    align-self: flex-end;
 }
 
-tbody tr:nth-child(even) {
-    background-color: #4C506A; /* Alternating row color */
+button:hover {
+    background: #88C0D0;
 }
 
-tbody tr:hover {
-    background-color: #61648F; /* Highlight row color on hover */
+button:disabled {
+    background: #636970;
+    cursor: not-allowed;
 }
 
-th {
-    text-align: left;
+
+.container{
+    display: flex;
+    flex-direction: row;
+    max-height: calc(100% - 64px);
+    justify-content: center;
+    max-width: 100%;
 }
 
-.col-price
-{
-    text-align: right;
-}
-
-.col-number
-{
-    text-align: right;
-}
-
-.col-short
-{
-    text-align: center;
-}
-
-.table-wrapper {
-    width: 80%;
-    max-width: 1200px;
-    margin: 0 auto;
+.container .side-nav {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 32px;
+    flex: 1 1 auto;
+    background-color: #1beabd;
+    max-width: 300px;
 }
-
-.table-header {
+.container .form {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%; /* Ensures it matches the table's width */
-    margin-bottom: 10px;
+    flex-direction: column;
+    flex: 2 1 auto;
+    background-color: #6A5ACD;
+    max-width: 700px;
+    overflow: auto;
+    gap: 32px;
 }
 
-.table-search {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #FFF;
-}
+.container .section-block
+{
+    background-color: #2E3440;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 15px 32px;
 
-.search-input {
-    padding: 10px; /* Slightly increased padding for better aesthetics */
-    border: 1px solid #4C506A;
-    border-radius: 4px;
-    background-color: #3C3F58;
-    color: #FFF;
-    margin-right: 10px;
-    flex-grow: 1; /* Ensures the input expands to fill space */
-    font-size: 14px;
-}
-
-.search-button {
-    padding: 10px 16px; /* Increase padding for consistency with input */
-    border: 1px solid #FF6F61;
-    background-color: #FF6F61;
-    color: #FFF;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.search-button:hover {
-    background-color: #FFC107;
-    color: #2D2F42;
-}
-
-.pagination {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.pagination a {
-    margin: 0 10px; /* Increase margin for spacing */
-    padding: 10px 20px; /* Larger padding for better clickability */
-    text-decoration: none;
-    color: #FFF;
-    border: 1px solid #FF6F61;
-    background-color: #FF6F61;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.pagination a.pagination-prev, .pagination a.pagination-next {
-    font-weight: bold;
 }
