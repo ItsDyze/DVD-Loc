@@ -97,12 +97,11 @@ namespace Services
 
             $query = $queryBuilder->getQuery();
 
-            $queryResult = $this->fetchAllStatement($query->sql, $query->params);
+            $queryResult = $this->fetchStatement($query->sql, $query->params, DVDModel::class);
 
-            if($queryResult && count($queryResult) == 1)
+            if($queryResult )
             {
-
-                return (object)$queryResult[0];
+                return $queryResult;
             }
 
             return null;

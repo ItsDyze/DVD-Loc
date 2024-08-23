@@ -3,12 +3,14 @@
 namespace Controllers\Manage
 {
 
+    use Models\DVDModel;
     use Models\Exceptions\BadRouteException;
     use Models\Exceptions\RouteNotFoundException;
     use Models\QueryModel\DVDQueryModel;
     use Models\ViewModels\ManageDVDDetailViewModel;
     use Models\ViewModels\ManageDVDListViewModel;
     use Services\DVDService;
+    use Utils\PHPUtils;
     use Views\Manage\DVD\Detail\ManageDVDDetailView;
     use Views\Manage\DVD\List\ManageDVDListView;
 
@@ -55,7 +57,7 @@ namespace Controllers\Manage
             $viewModel = new ManageDVDDetailViewModel();
             $service = DVDService::getInstance();
 
-            $viewModel->DVD = $service->getDVDById($dvd);
+            $viewModel->DVD = PHPUtils::objectToObject($service->getDVDById($dvd), DVDModel::class);
 
             new ManageDVDDetailView($viewModel);
         }

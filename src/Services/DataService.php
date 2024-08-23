@@ -103,13 +103,22 @@ namespace Services {
             return $query->fetchColumn();
         }
 
-        protected function fetchStatement($statement, $parameters)
+        protected function fetchStatement($statement, $parameters, $className = null)
         {
             $this->validateStatementAndParameters($statement, $parameters);
 
             $query = $this->GetDBContext()->prepare($statement);
             $query->execute($parameters);
-            return $query->fetch(PDO::FETCH_OBJ);
+
+            if($className != null)
+            {
+                $query->setFetchMode(PDO::FETCH_CLASS, $className);
+                return $query->fetch();
+            }
+            else
+            {
+                return $query->fetch(PDO::FETCH_OBJ);
+            }
         }
 
         protected function fetchAllStatement($statement, $parameters)

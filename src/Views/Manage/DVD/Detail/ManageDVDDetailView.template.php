@@ -1,7 +1,7 @@
 <h2>
-    Manage <?php echo $data->DVD->TitleLocal; ?>
+    🎬 <?php echo $data->DVD->LocalTitle; ?> 🎬
 </h2>
-<a onclick="back()">Back to the list</a>
+<a class="custom-link" onclick="history.back()">Back to the list</a>
 <div class="dvd-form">
 
 </div>
