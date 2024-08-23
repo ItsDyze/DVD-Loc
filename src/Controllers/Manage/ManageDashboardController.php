@@ -17,8 +17,8 @@ namespace Controllers\Manage
             $service = DVDService::getInstance();
             $queryModel = new DVDQueryModel();
             $queryModel->IsOffered=true;
-            $viewModel->DVDCount = $service->getDVDCount();
-            $viewModel->OfferedDVDCount = $service->getDVDCount($queryModel);
+            $viewModel->DVDCount = $service->getCount();
+            $viewModel->OfferedDVDCount = $service->getCount($queryModel);
             $view = new DashboardView($viewModel);
             $view->render();
         }

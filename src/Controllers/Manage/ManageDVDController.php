@@ -4,11 +4,13 @@ namespace Controllers\Manage
 {
 
     use Controllers\BaseController;
+    use Exception;
     use Models\DVDModel;
     use Models\Exceptions\BadRouteException;
     use Models\Exceptions\RouteNotFoundException;
     use Models\QueryModel\DVDQueryModel;
     use Models\ViewModels\ManageDVDDetailViewModel;
+    use Models\ViewModels\ManageDVDDetailViewStateEnum;
     use Models\ViewModels\ManageDVDListViewModel;
     use Services\DVDService;
     use Utils\PHPUtils;
@@ -30,7 +32,7 @@ namespace Controllers\Manage
             }
         }
 
-        public function getAll():void
+        private function getAll():void
         {
             $viewModel = new ManageDVDListViewModel();
             $service = DVDService::getInstance();
@@ -47,8 +49,8 @@ namespace Controllers\Manage
             }
 
             $viewModel->Query = $queryModel;
-            $viewModel->FilteredCount = $service->getDVDCount($queryModel);
-            $viewModel->DVDs = $service->getDVDs($queryModel);
+            $viewModel->FilteredCount = $service->getCount($queryModel);
+            $viewModel->DVDs = $service->getAll($queryModel);
             $viewModel->TotalPages = ceil($viewModel->FilteredCount / $queryModel->Limit);
             $viewModel->CurrentPage = ($queryModel->Offset / $queryModel->Limit) + 1;
 
@@ -61,10 +63,33 @@ namespace Controllers\Manage
             $viewModel = new ManageDVDDetailViewModel();
             $service = DVDService::getInstance();
 
-            $viewModel->DVD = $service->getDVDById($id);
+            $viewModel->DVD = $service->getById($id);
+            $viewModel->state = ManageDVDDetailViewStateEnum::Update;
 
             $controller = new ManageDVDDetailView($viewModel);
             $controller->render();
+        }
+
+        public function put($id): void
+        {
+            if($id === null)
+            {
+                http_response_code(502);
+            }
+
+            $model = new DVDModel();
+            $service = DVDService::getInstance();
+
+            $model->Id = $id;
+            $model->Title = $_POST["Title"];
+            $model->LocalTitle = $_POST["LocalTitle"];
+            $model->Synopsis = $_POST["Synopsis"];
+            $model->Notation = $_POST["Notation"];
+
+            $service->update($model);
+
+            header("Location: /manage/dvd/$id");
+            die();
         }
     }
 }

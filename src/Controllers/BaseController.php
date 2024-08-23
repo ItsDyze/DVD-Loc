@@ -12,7 +12,7 @@ abstract class BaseController
     {
         http_response_code(405);
     }
-    public function put(): void
+    public function put(int $id): void
     {
         http_response_code(405);
     }

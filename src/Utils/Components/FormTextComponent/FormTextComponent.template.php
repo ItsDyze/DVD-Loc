@@ -4,7 +4,7 @@
            name="<?php echo $this->name; ?>"
            placeholder="<?php echo $this->placeholder; ?>"
            value="<?php echo $this->value; ?>"
-           required="<?php echo $this->required; ?>"
-           readonly="<?php echo $this->readOnly; ?>"
+           <?php echo $this->required?"required":""; ?>
+           <?php echo $this->readOnly?"readOnly":""; ?>
     />
 </label>

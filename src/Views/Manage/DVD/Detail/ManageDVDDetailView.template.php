@@ -1,10 +1,17 @@
 <?php
 
 namespace Views\Manage\DVD\Detail;
+use Models\ViewModels\ManageDVDDetailViewStateEnum;
 use Utils\Components\ComponentsEnum;
 use Utils\ComponentsUtils;
 
 $componentBuilder = new ComponentsUtils();
+$action = match ($data->state)
+{
+    ManageDVDDetailViewStateEnum::Create => "POST",
+    ManageDVDDetailViewStateEnum::Update => "PUT",
+    default => ""
+};
 
 ?>
 <h2>
@@ -24,6 +31,7 @@ $componentBuilder = new ComponentsUtils();
     <div class="form section-block">
         <div>
             <h3 id="General">General</h3>
+            <input type="hidden" name="_METHOD" value="<?php echo $action; ?>"/>
             <?php echo $componentBuilder->getComponent(ComponentsEnum::FormText, "Title", "Titre", "Titre", $data->DVD->Title, true, false); ?>
             <?php echo $componentBuilder->getComponent(ComponentsEnum::FormText, "LocalTitle", "Titre local", "Titre local", $data->DVD->LocalTitle, true, false); ?>
             <?php echo $componentBuilder->getComponent(ComponentsEnum::FormText, "Synopsis", "Synopsis", "Synopsis", $data->DVD->Synopsis, true, false); ?>
@@ -31,7 +39,7 @@ $componentBuilder = new ComponentsUtils();
         </div>
         <div>
             <h3 id="Avis">Avis</h3>
-            <?php echo $componentBuilder->getComponent(ComponentsEnum::FormText, "Note", "Note", "Note", $data->DVD->Note, false, false); ?>
+            <?php echo $componentBuilder->getComponent(ComponentsEnum::FormText, "Notation", "Notation", "Notation", $data->DVD->Notation, false, false); ?>
             <?php echo $componentBuilder->getComponent(ComponentsEnum::FormText, "Note", "Note", "Note", $data->DVD->Note, false, false); ?>
         </div>
         <div>

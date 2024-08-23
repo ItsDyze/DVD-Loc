@@ -7,6 +7,7 @@ namespace Services
     use Models\DVDModel;
     use Models\QueryModel\DVDQueryModel;
     use Utils\Query\QueryBuilder;
+    use Utils\Query\UpdateQueryBuilder;
 
     class DVDService extends DataService
     {
@@ -15,7 +16,7 @@ namespace Services
             parent::__construct();
         }
 
-        public function getDVDCount(DVDQueryModel $queryModel = null):int
+        public function getCount(DVDQueryModel $queryModel = null):int
         {
             $queryBuilder = (new QueryBuilder())
                 ->select("Count(id)")
@@ -46,7 +47,7 @@ namespace Services
             return 0;
         }
 
-        public function getDVDs(DVDQueryModel $queryModel): array
+        public function getAll(DVDQueryModel $queryModel): array
         {
             $result = array();
             $queryBuilder = (new QueryBuilder())
@@ -87,7 +88,7 @@ namespace Services
             return $result;
         }
 
-        public function getDVDById($id)
+        public function getById($id):?DVDModel
         {
             $result = array();
             $queryBuilder = (new QueryBuilder())
@@ -105,6 +106,22 @@ namespace Services
             }
 
             return null;
+        }
+
+        public function update(DVDModel $dvd)
+        {
+            $queryBuilder = (new UpdateQueryBuilder())
+                ->update("dvds")
+                ->set("Title", $dvd->Title)
+                ->set("LocalTitle", $dvd->LocalTitle)
+                ->set("Synopsis", $dvd->Synopsis)
+                ->set("Notation", $dvd->Notation)
+
+                ->where("Id", "=", $dvd->Id);
+
+            $query = $queryBuilder->getQuery();
+
+            $queryResult = $this->fetchStatement($query->sql, $query->params, DVDModel::class);
         }
 
         function isAllowedOrderColumn(string $column): bool

@@ -9,6 +9,7 @@ namespace Models\ViewModels
     class ManageDVDDetailViewModel implements IViewModel
     {
         public DVDModel $DVD;
+        public ManageDVDDetailViewStateEnum $state;
     }
 }
 

@@ -28,6 +28,10 @@ namespace Middlewares
         {
             $route = strtolower(rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/\\'));
             $verb = strtolower($_SERVER['REQUEST_METHOD']);
+            if($verb == "post" && isset($_POST['_METHOD']))
+            {
+                $verb = strtolower($_POST['_METHOD']);
+            }
             $fragments = explode('/', $route);
             $routeHasParam = is_numeric($fragments[count($fragments) - 1]);
             $param = null;
@@ -35,6 +39,8 @@ namespace Middlewares
                 $param = $fragments[count($fragments) - 1];
                 $route = rtrim($route, '/\\' . $param);
             }
+
+            if($route == "") { $route = "/home"; }
 
             $routeRegistry = array(
                 "/home" => function() {

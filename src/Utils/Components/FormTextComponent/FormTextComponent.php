@@ -6,6 +6,8 @@ class FormTextComponent
     public string $label;
     public ?string $value;
     public ?string $placeholder;
+    public bool $required;
+    public bool $readOnly;
 
     public function __construct(string $name, string $label, ?string $placeholder = null, ?string $value = "", bool $required = true, bool $readOnly = false)
     {
@@ -13,6 +15,8 @@ class FormTextComponent
         $this->label = $label;
         $this->value = $value;
         $this->placeholder = $placeholder;
+        $this->required = $required;
+        $this->readOnly = $readOnly;
     }
 
     public function getRenderedComponent()

@@ -5,6 +5,7 @@ namespace Views\Manage\DVD\Detail
 
     use Models\ViewModels\LayoutViewModel;
     use Models\ViewModels\ManageDVDDetailViewModel;
+    use Models\ViewModels\ManageDVDDetailViewStateEnum;
     use Views\BaseView;
 
     class ManageDVDDetailView extends BaseView
