@@ -36,6 +36,30 @@ namespace Controllers\Manage
             new ManageDVDView($viewModel);
         }
 
+        public function index(int $dvdId)
+        {
+            $viewModel = new ManageDVDViewModel();
+            $service = DVDService::getInstance();
+
+            $queryModel = new DVDQueryModel();
+            if(!empty($_GET))
+            {
+                $queryModel->setFromQueryString($_GET);
+            }
+            else
+            {
+                header('Location: ' . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)."?".$queryModel->getQueryString(), true, 303);
+                die();
+            }
+
+            $viewModel->Query = $queryModel;
+            $viewModel->FilteredCount = $service->getDVDCount($queryModel);
+            $viewModel->DVDs = $service->getDVDs($queryModel);
+            $viewModel->TotalPages = ceil($viewModel->FilteredCount / $queryModel->Limit);
+            $viewModel->CurrentPage = ($queryModel->Offset / $queryModel->Limit) + 1;
+            new ManageDVDView($viewModel);
+        }
+
         /**
          * @throws BadRouteException
          * @throws RouteNotFoundException
@@ -56,7 +80,8 @@ namespace Controllers\Manage
 
             switch (strtolower($requestedController[3])) {
                 case '/' :
-                    $this->index();
+                    isset($requestedController[4]) && is_int($requestedController[4]) ?
+                        $this->index($requestedController[4]):$this->index();
                     break;
                 default:
                     throw new RouteNotFoundException("Manage/DVD");
