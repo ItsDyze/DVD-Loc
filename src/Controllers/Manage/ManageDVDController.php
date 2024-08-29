@@ -96,7 +96,7 @@ namespace Controllers\Manage
             $model->Year = $_POST["Year"];
             $model->TypeId = !is_null($_POST["TypeId"]) ? intval($_POST["TypeId"]) : null;
             $model->Genres = $_POST["Genres"] && is_array($_POST["Genres"]) ? $_POST["Genres"] : null;
-            $model->Image = $_POST["Image"];
+            //$model->Image = $_POST["Image"];
 
             $service->update($model);
 

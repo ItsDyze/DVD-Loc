@@ -122,7 +122,7 @@ namespace Services
                 ->set("Quantity", $dvd->Quantity)
                 ->set("Price", $dvd->Price)
                 ->set("Year", $dvd->Year)
-                ->set("Image", $dvd->Image)
+                //->set("Image", $dvd->Image)
                 ->set("TypeId", $dvd->TypeId)
 
                 ->where("Id", "=", $dvd->Id);
