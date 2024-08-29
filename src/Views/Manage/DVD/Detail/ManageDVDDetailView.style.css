@@ -50,46 +50,10 @@
     margin: 15px 32px;
 }
 
-label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #D8DEE9;
-}
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-    background: #434C5E;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    color: #ECEFF4;
-    font-size: 14px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background 0.3s ease;
-}
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-textarea:focus {
-    background: #4C566A;
-    outline: none;
-}
 
-button {
-    background: #81A1C1;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    align-self: flex-end;
-}
+
 
 button:hover {
     background: #88C0D0;
@@ -136,6 +100,9 @@ button:disabled {
     margin: 15px 32px;
 
 }
+
+
+
 
 @media only screen and (max-width: 1024px) {
     .container .side-nav {

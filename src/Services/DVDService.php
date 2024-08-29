@@ -92,7 +92,7 @@ namespace Services
         {
             $result = array();
             $queryBuilder = (new QueryBuilder())
-                ->select(["Id", "Title", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "IsOffered", "Quantity", "Price", "Year"])
+                ->select(["Id", "Title", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId"])
                 ->from("dvds")
                 ->where("Id", "=", $id);
 
@@ -116,6 +116,14 @@ namespace Services
                 ->set("LocalTitle", $dvd->LocalTitle)
                 ->set("Synopsis", $dvd->Synopsis)
                 ->set("Notation", $dvd->Notation)
+                ->set("Certification", $dvd->Certification)
+                ->set("Note", $dvd->Note)
+                ->set("IsOffered", $dvd->IsOffered)
+                ->set("Quantity", $dvd->Quantity)
+                ->set("Price", $dvd->Price)
+                ->set("Year", $dvd->Year)
+                ->set("Image", $dvd->Image)
+                ->set("TypeId", $dvd->TypeId)
 
                 ->where("Id", "=", $dvd->Id);
 

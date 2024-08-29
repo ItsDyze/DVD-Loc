@@ -4,20 +4,41 @@ namespace Utils
 {
 
     use Utils\Components\ComponentsEnum;
+    use Utils\Components\FormAreaComponent\FormAreaComponent;
+    use Utils\Components\FormImageComponent\FormImageComponent;
+    use Utils\Components\FormNumberComponent\FormNumberComponent;
     use Utils\Components\FormTextComponent\FormTextComponent;
+    use Utils\Components\FormToggleComponent\FormToggleComponent;
 
     class ComponentsUtils
     {
-        public static function getComponent(ComponentsEnum $componentType, string $name, string $label, ?string $placeholder = null, ?string $value = "", bool $required = true, bool $readOnly = false)
+
+        public static function getTextComponent($name, $label, $placeholder, $value, $required, $readOnly):string
         {
-            switch ($componentType) {
-                case ComponentsEnum::FormText:
-                    $textComponent = new FormTextComponent($name, $label, $placeholder, $value, $required, $readOnly);
-                    return $textComponent->getRenderedComponent();
-                default:
-                    return "";
-            }
+            $comp = new FormTextComponent($name, $label, $placeholder, $value, $required, $readOnly);
+            return $comp->getRenderedComponent();
         }
+        public static function getAreaComponent($name, $label, $placeholder, $value, $required, $readOnly):string
+        {
+            $comp = new FormAreaComponent($name, $label, $placeholder, $value, $required, $readOnly);
+            return $comp->getRenderedComponent();
+        }
+        public static function getToggleComponent($name, $label, $value, $required, $readOnly):string
+        {
+            $comp = new FormToggleComponent($name, $label, $value, $required, $readOnly);
+            return $comp->getRenderedComponent();
+        }
+        public static function getNumberComponent($name, $label, $value, $min, $max, $step, $required, $readOnly):string
+        {
+            $comp = new FormNumberComponent($name, $label, $value, $min, $max, $step, $required, $readOnly);
+            return $comp->getRenderedComponent();
+        }
+        public static function getImageComponent($name, $label, $value, $valueBase64, $imgType, $required, $readOnly):string
+        {
+            $comp = new FormImageComponent($name, $label, $value, $valueBase64, $imgType, $required, $readOnly);
+            return $comp->getRenderedComponent();
+        }
+
     }
 }
 

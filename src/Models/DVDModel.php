@@ -15,6 +15,13 @@ namespace Models
         public ?int $Quantity;
         public ?float $Price;
         public ?int $Year;
+        public ?string $Image;
+        public ?int $TypeId;
+        public ?string $Type;
+        public ?string $ImageBase64;
+        public ?string $ImageSignature;
+
+        public ?array $Genres;
     }
 }
 

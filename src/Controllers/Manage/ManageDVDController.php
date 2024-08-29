@@ -13,6 +13,7 @@ namespace Controllers\Manage
     use Models\ViewModels\ManageDVDDetailViewStateEnum;
     use Models\ViewModels\ManageDVDListViewModel;
     use Services\DVDService;
+    use Utils\ImageUtils;
     use Utils\PHPUtils;
     use Views\Manage\DVD\Detail\ManageDVDDetailView;
     use Views\Manage\DVD\List\ManageDVDListView;
@@ -64,6 +65,8 @@ namespace Controllers\Manage
             $service = DVDService::getInstance();
 
             $viewModel->DVD = $service->getById($id);
+            //$viewModel->DVD->ImageBase64 = base64_encode($viewModel->DVD->Image);
+            //$viewModel->DVD->ImageSignature = ImageUtils::getImageTypeFromSignature($viewModel->DVD->Image);
             $viewModel->state = ManageDVDDetailViewStateEnum::Update;
 
             $controller = new ManageDVDDetailView($viewModel);
@@ -85,6 +88,15 @@ namespace Controllers\Manage
             $model->LocalTitle = $_POST["LocalTitle"];
             $model->Synopsis = $_POST["Synopsis"];
             $model->Notation = $_POST["Notation"];
+            $model->Certification = $_POST["Certification"];
+            $model->Note = $_POST["Note"];
+            $model->IsOffered = $_POST["IsOffered"];
+            $model->Quantity = $_POST["Quantity"];
+            $model->Price = $_POST["Price"];
+            $model->Year = $_POST["Year"];
+            $model->TypeId = !is_null($_POST["TypeId"]) ? intval($_POST["TypeId"]) : null;
+            $model->Genres = $_POST["Genres"] && is_array($_POST["Genres"]) ? $_POST["Genres"] : null;
+            $model->Image = $_POST["Image"];
 
             $service->update($model);
 

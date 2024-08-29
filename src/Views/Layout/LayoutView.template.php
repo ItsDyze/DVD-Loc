@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C218 - <?php echo $this->layoutData->pageSubTitle ?? "Home" ?></title>
     <script type="text/javascript">
+        <?php include ASSETS . 'scripts.js'; ?>
         <?php
             echo $this->subScripts;
         ?>

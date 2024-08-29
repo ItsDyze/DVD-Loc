@@ -22,7 +22,8 @@ switch ($this->data->viewState)
         case RegisterViewStateEnum::InProgress:
         default:
 ?>
-<form method="POST" action="">
+<form method="POST" action="" class="sub-page">
+    <h2>Register here!</h2>
     <label>
         <span>Last name</span>
         <input type="text" name="LastName" placeholder="Last name" required>

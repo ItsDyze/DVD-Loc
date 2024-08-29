@@ -5,9 +5,10 @@ namespace Utils\Components
     enum ComponentsEnum
     {
         case FormText;
+        case FormArea;
         case FormNumber;
         case FormSelect;
-        case FormRadio;
+        case FormToggle;
         case FormAutocomplete;
 
     }
