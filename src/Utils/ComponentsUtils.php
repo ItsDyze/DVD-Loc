@@ -33,9 +33,9 @@ namespace Utils
             $comp = new FormNumberComponent($name, $label, $value, $min, $max, $step, $required, $readOnly);
             return $comp->getRenderedComponent();
         }
-        public static function getImageComponent($name, $label, $value, $valueBase64, $imgType, $required, $readOnly):string
+        public static function getImageComponent($name, $label, $valueBase64, $required, $readOnly):string
         {
-            $comp = new FormImageComponent($name, $label, $value, $valueBase64, $imgType, $required, $readOnly);
+            $comp = new FormImageComponent($name, $label, $valueBase64, $required, $readOnly);
             return $comp->getRenderedComponent();
         }
 

@@ -64,10 +64,34 @@ namespace Controllers\Manage
             $viewModel = new ManageDVDDetailViewModel();
             $service = DVDService::getInstance();
 
-            $viewModel->DVD = $service->getById($id);
-            //$viewModel->DVD->ImageBase64 = base64_encode($viewModel->DVD->Image);
-            //$viewModel->DVD->ImageSignature = ImageUtils::getImageTypeFromSignature($viewModel->DVD->Image);
-            $viewModel->state = ManageDVDDetailViewStateEnum::Update;
+            if($id === -1)
+            {
+                $viewModel->state = ManageDVDDetailViewStateEnum::Create;
+                $model = new DVDModel();
+                $model->Title = "";
+                $model->LocalTitle = "";
+                $model->Synopsis = "";
+                $model->Notation = 0;
+                $model->Certification = "";
+                $model->Note = "";
+                $model->IsOffered = true;
+                $model->Quantity = 0;
+                $model->Price = 0;
+                $model->Year = 0;
+                $model->TypeId = null;
+                $model->Image = null;
+                $model->Genres = [];
+
+                $viewModel->DVD = $model;
+
+            }
+            else
+            {
+                $viewModel->DVD = $service->getById($id);
+                //$viewModel->DVD->ImageBase64 = base64_encode($viewModel->DVD->Image);
+                //$viewModel->DVD->ImageSignature = ImageUtils::getImageTypeFromSignature($viewModel->DVD->Image);
+                $viewModel->state = ManageDVDDetailViewStateEnum::Update;
+            }
 
             $controller = new ManageDVDDetailView($viewModel);
             $controller->render();
@@ -84,6 +108,31 @@ namespace Controllers\Manage
             $service = DVDService::getInstance();
 
             $model->Id = $id;
+            $this->postToDvdModel($model);
+
+            $service->update($model);
+
+            header("Location: /manage/dvd/$id");
+            die();
+        }
+
+        public function post(): void
+        {
+
+            $model = new DVDModel();
+            $service = DVDService::getInstance();
+
+            $this->postToDvdModel($model);
+            //$model->Image = $_POST["Image"];
+
+            $newId = $service->insert($model);
+
+            header("Location: /manage/dvd/$newId");
+            die();
+        }
+
+        private function postToDvdModel(DVDModel $model)
+        {
             $model->Title = $_POST["Title"];
             $model->LocalTitle = $_POST["LocalTitle"];
             $model->Synopsis = $_POST["Synopsis"];
@@ -96,12 +145,7 @@ namespace Controllers\Manage
             $model->Year = $_POST["Year"];
             $model->TypeId = !is_null($_POST["TypeId"]) ? intval($_POST["TypeId"]) : null;
             $model->Genres = $_POST["Genres"] && is_array($_POST["Genres"]) ? $_POST["Genres"] : null;
-            //$model->Image = $_POST["Image"];
-
-            $service->update($model);
-
-            header("Location: /manage/dvd/$id");
-            die();
+            $model->Image = $_POST["Image"];
         }
     }
 }

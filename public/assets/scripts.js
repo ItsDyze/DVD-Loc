@@ -3,14 +3,19 @@ function checkboxHelper(checkbox)
     checkbox.value = checkbox.checked;
 }
 
-function fileHelper(inputId, imgType, e)
+function fileHelper(inputId, e)
 {
     if(e.target.files && e.target.files[0] && e.target.files[0].size < 5242880) {
-        const reader = new FileReader();
-        reader.onload = evt => {
-            resizeImage(evt.target.result, imgType, 512, 1024, (r) => document.getElementById(inputId).value = r)
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result;
+                //resizeImage(base64String, 512, 768, img => document.getElementById(inputId).value = img);
+                document.getElementById(inputId).value = base64String;
+            };
+            reader.readAsDataURL(file);
         }
-        reader.readAsText(e.target.files[0]);
     }
     else
     {
@@ -18,17 +23,11 @@ function fileHelper(inputId, imgType, e)
     }
 }
 
-function resizeImage(imgBytes, imgType, maxWidth, maxHeight, cb)
+function resizeImage(base64, maxWidth, maxHeight, callback)
 {
-    const blob = new Blob([byteArray]);
-
     const img = new Image();
-    const url = URL.createObjectURL(blob);
-
+    img.src = base64;
     img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-
         let width = img.width;
         let height = img.height;
 
@@ -44,20 +43,15 @@ function resizeImage(imgBytes, imgType, maxWidth, maxHeight, cb)
             }
         }
 
+        const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
 
+        const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
 
-        canvas.toBlob((resizedBlob) => {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const resizedByteArray = new Uint8Array(event.target.result);
-                cb(resizedByteArray);
-            };
-            reader.readAsArrayBuffer(resizedBlob);
-        }, imgType);
-
-        URL.revokeObjectURL(url);
+        const resizedBase64 = canvas.toDataURL();
+        console.log(resizedBase64)
+        callback(resizedBase64);
     };
 }

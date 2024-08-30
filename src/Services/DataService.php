@@ -94,6 +94,15 @@ namespace Services {
             return $query->execute($parameters);
         }
 
+        protected function insertStatement($statement, $parameters)
+        {
+            $this->validateStatementAndParameters($statement, $parameters);
+
+            $query = $this->GetDBContext()->prepare($statement);
+            $query->execute($parameters);
+            return $this->GetDBContext()->lastInsertId();
+        }
+
         protected function fetchValue($statement, $parameters)
         {
             $this->validateStatementAndParameters($statement, $parameters);

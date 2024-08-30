@@ -39,7 +39,7 @@ $action = match ($data->state)
             <?php echo $componentBuilder->getAreaComponent("Synopsis", "Synopsis", "Synopsis", $data->DVD->Synopsis, true, false); ?>
             <?php echo $componentBuilder->getNumberComponent("Year", "Année de sortie", $data->DVD->Year, 1800, 2500, 1, false, false); ?>
             <?php
-                //echo $componentBuilder->getImageComponent("Image", "Image", $data->DVD->Image, $data->DVD->ImageBase64, $data->DVD->ImageSignature, false, false);
+                echo $componentBuilder->getImageComponent("Image", "Image", $data->DVD->Image, false, false);
             ?>
         </div>
         <div>

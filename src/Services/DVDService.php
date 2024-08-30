@@ -6,6 +6,7 @@ namespace Services
     use Exception;
     use Models\DVDModel;
     use Models\QueryModel\DVDQueryModel;
+    use Utils\Query\InsertQueryBuilder;
     use Utils\Query\QueryBuilder;
     use Utils\Query\UpdateQueryBuilder;
 
@@ -51,7 +52,7 @@ namespace Services
         {
             $result = array();
             $queryBuilder = (new QueryBuilder())
-                ->select(["Id", "Title", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "IsOffered", "Quantity", "Price", "Year"])
+                ->select(["Id", "LocalTitle", "Notation", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId"])
                 ->from("dvds")
                 ->limit($queryModel->Offset, $queryModel->Limit);
 
@@ -122,7 +123,7 @@ namespace Services
                 ->set("Quantity", $dvd->Quantity)
                 ->set("Price", $dvd->Price)
                 ->set("Year", $dvd->Year)
-                //->set("Image", $dvd->Image)
+                ->set("Image", $dvd->Image)
                 ->set("TypeId", $dvd->TypeId)
 
                 ->where("Id", "=", $dvd->Id);
@@ -130,6 +131,28 @@ namespace Services
             $query = $queryBuilder->getQuery();
 
             $queryResult = $this->fetchStatement($query->sql, $query->params, DVDModel::class);
+        }
+
+        public function insert(DVDModel $dvd)
+        {
+            $queryBuilder = (new InsertQueryBuilder())
+                ->insert("dvds")
+                ->value("Title", $dvd->Title)
+                ->value("LocalTitle", $dvd->LocalTitle)
+                ->value("Synopsis", $dvd->Synopsis)
+                ->value("Notation", $dvd->Notation)
+                ->value("Certification", $dvd->Certification)
+                ->value("Note", $dvd->Note)
+                ->value("IsOffered", $dvd->IsOffered)
+                ->value("Quantity", $dvd->Quantity)
+                ->value("Price", $dvd->Price)
+                ->value("Year", $dvd->Year)
+                ->value("Image", $dvd->Image)
+                ->value("TypeId", $dvd->TypeId);
+
+            $query = $queryBuilder->getQuery();
+
+            return $this->insertStatement($query->sql, $query->params);
         }
 
         function isAllowedOrderColumn(string $column): bool

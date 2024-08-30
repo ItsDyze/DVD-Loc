@@ -12,13 +12,11 @@ class FormImageComponent
     public bool $required;
     public bool $readOnly;
 
-    public function __construct(string $name, string $label, ?string $value, ?string $base64Value, ?string $imgType, bool $required = true, bool $readOnly = true)
+    public function __construct(string $name, string $label, ?string $base64Value, bool $required = true, bool $readOnly = true)
     {
         $this->name = $name;
         $this->label = $label;
-        $this->value = $value;
         $this->base64Value = $base64Value;
-        $this->imgType = $imgType;
         $this->required = $required;
         $this->readOnly = $readOnly;
     }

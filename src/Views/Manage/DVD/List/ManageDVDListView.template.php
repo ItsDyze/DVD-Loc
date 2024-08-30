@@ -4,8 +4,9 @@
 <div class="table-wrapper">
     <div class="table-header">
         <div class="table-search">
-            <input id="dvd-search-input" type="text" name="search" placeholder="Search DVDs..." value="<?php echo htmlspecialchars($_GET['Search'] ?? '', ENT_QUOTES); ?>" class="search-input">
-            <button type="submit" class="search-button" onclick="search()">Search</button>
+            <input id="dvd-search-input" type="text" name="search" placeholder="Chercher un DVD..." value="<?php echo htmlspecialchars($_GET['Search'] ?? '', ENT_QUOTES); ?>" class="search-input">
+            <button type="submit" class="search-button" onclick="search()">Filtrer</button>
+            <a href="/manage/dvd/-1">Ajouter un nouveau</a>
         </div>
     </div>
     <table>
