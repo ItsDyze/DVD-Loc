@@ -11,8 +11,8 @@ function fileHelper(inputId, e)
             const reader = new FileReader();
             reader.onload = function(event) {
                 const base64String = event.target.result;
-                //resizeImage(base64String, 512, 768, img => document.getElementById(inputId).value = img);
                 document.getElementById(inputId).value = base64String;
+                resizeAndPreview(inputId, base64String, 256, 384);
             };
             reader.readAsDataURL(file);
         }
@@ -23,35 +23,45 @@ function fileHelper(inputId, e)
     }
 }
 
-function resizeImage(base64, maxWidth, maxHeight, callback)
-{
+function resizeAndPreview(input, base64, maxWidth, maxHeight, cb) {
     const img = new Image();
     img.src = base64;
     img.onload = () => {
         let width = img.width;
         let height = img.height;
 
-        if (width > height) {
-            if (width > maxWidth) {
-                height *= maxWidth / width;
-                width = maxWidth;
-            }
+        const imgAspectRatio = width / height;
+        const maxAspectRatio = maxWidth / maxHeight;
+
+        let newWidth, newHeight;
+
+        if (imgAspectRatio > maxAspectRatio) {
+            newWidth = maxWidth;
+            newHeight = maxWidth / imgAspectRatio;
         } else {
-            if (height > maxHeight) {
-                width *= maxHeight / height;
-                height = maxHeight;
-            }
+            newHeight = maxHeight;
+            newWidth = maxHeight * imgAspectRatio;
         }
 
         const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = maxWidth;
+        canvas.height = maxHeight;
 
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, maxWidth, maxHeight);
+
+        const offsetX = (maxWidth - newWidth) / 2;
+        const offsetY = (maxHeight - newHeight) / 2;
+
+        ctx.drawImage(img, offsetX, offsetY, newWidth, newHeight);
+
+
 
         const resizedBase64 = canvas.toDataURL();
-        console.log(resizedBase64)
-        callback(resizedBase64);
-    };
+        document.getElementById("preview-" + input).src=resizedBase64
+        document.getElementById(input).value = resizedBase64
+        cb(resizedBase64)
+    }
 }

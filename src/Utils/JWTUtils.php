@@ -119,6 +119,27 @@ namespace Utils
             }
             return true;
         }
+
+        public static function isAuthorized($admin = false)
+        {
+            if (empty($_COOKIE['jwt'])) {
+                // Redirect to the login page if the user is not authenticated
+                http_response_code(401);
+                exit;
+            }
+
+            // Decode the JWT token to get user information
+            $jwt = JWTUtils::decode($_COOKIE['jwt']);
+
+            // If a specific role is required, check if the user has that role
+            if (!(isset($jwt) || !$jwt->isAdmin)) {
+                // Redirect to an unauthorized page or show an error
+                http_response_code(403);
+                exit;
+            }
+
+            return true;
+        }
     }
 }
 

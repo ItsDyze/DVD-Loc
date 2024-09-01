@@ -17,7 +17,7 @@ $action = match ($data->state)
 <h2>
     🎬 <?php echo $data->DVD->LocalTitle; ?> 🎬
 </h2>
-<a class="custom-link" onclick="history.back()">Back to the list</a>
+<a class="custom-link" href="/Manage/DVD">Back to the list</a>
 
 <form method="POST" action="" class="container">
     <div class="side-nav section-block">

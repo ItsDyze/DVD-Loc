@@ -7,6 +7,7 @@ namespace Middlewares
     use Controllers\Auth\LoginController;
     use Controllers\Auth\LogoutController;
     use Controllers\Auth\RegisterController;
+    use Controllers\DVD\DVDController;
     use Controllers\Error\ErrorController;
     use Controllers\Error\ErrorRouter;
     use Controllers\Home\HomeController;
@@ -66,6 +67,9 @@ namespace Middlewares
                 },
                 "/manage/dvd" => function() {
                     return new ManageDVDController();
+                },
+                "/dvd" => function() {
+                    return new DVDController();
                 }
             );
 

@@ -6,7 +6,9 @@ class DVDLightModel
 {
     public int $Id;
     public ?string $LocalTitle;
+    public ?string $Synopsis;
     public ?int $Notation;
+    public ?string $Note;
     public ?string $Certification;
     public ?bool $IsOffered;
     public ?int $Quantity;

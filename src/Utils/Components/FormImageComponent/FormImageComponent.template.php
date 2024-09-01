@@ -7,5 +7,5 @@
            id="file-<?php echo $this->name; ?>"
         <?php echo $this->required?"required":""; ?>
     />
-    <img src="<?php echo $this->base64Value; ?>" alt="image preview"/>
+    <img id="preview-<?php echo $this->name; ?>" src="<?php echo $this->base64Value; ?>" alt="preview"/>
 </label>

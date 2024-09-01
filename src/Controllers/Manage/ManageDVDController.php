@@ -4,22 +4,23 @@ namespace Controllers\Manage
 {
 
     use Controllers\BaseController;
-    use Exception;
     use Models\DVDModel;
-    use Models\Exceptions\BadRouteException;
-    use Models\Exceptions\RouteNotFoundException;
     use Models\QueryModel\DVDQueryModel;
     use Models\ViewModels\ManageDVDDetailViewModel;
     use Models\ViewModels\ManageDVDDetailViewStateEnum;
     use Models\ViewModels\ManageDVDListViewModel;
     use Services\DVDService;
-    use Utils\ImageUtils;
-    use Utils\PHPUtils;
+    use Utils\JWTUtils;
     use Views\Manage\DVD\Detail\ManageDVDDetailView;
     use Views\Manage\DVD\List\ManageDVDListView;
 
     class ManageDVDController extends BaseController
     {
+
+        function __construct()
+        {
+            JWTUtils::isAuthorized(true);
+        }
 
         public function get(int $id = null): void
         {

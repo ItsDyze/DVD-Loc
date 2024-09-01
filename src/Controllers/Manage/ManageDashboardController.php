@@ -7,10 +7,16 @@ namespace Controllers\Manage
     use Models\QueryModel\DVDQueryModel;
     use Models\ViewModels\DashboardViewModel;
     use Services\DVDService;
+    use Utils\JWTUtils;
     use Views\Manage\Dashboard\DashboardView;
 
     class ManageDashboardController extends BaseController
     {
+        function __construct()
+        {
+            JWTUtils::isAuthorized(true);
+        }
+
         public function get(): void
         {
             $viewModel = new DashboardViewModel();

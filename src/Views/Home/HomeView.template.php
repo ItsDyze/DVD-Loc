@@ -5,12 +5,18 @@
 
 <div class="card-container">
     <?php foreach ($data->DVDs as $row): ?>
-        <div class="card clickable" onclick="document.location.href='/manage/dvd/<?php echo $row->Id; ?>'">
+        <div class="card clickable" onclick="document.location.href='/dvd/<?php echo $row->Id; ?>'">
             <div class="card-content">
                 <h3><?php echo $row->LocalTitle; ?></h3>
-                <div class="no-preview">
-                    <span>No Preview Available</span>
-                </div>
+                <?php if($row->Image): ?>
+                    <img src="<?php echo $row->Image; ?>" alt="preview" />
+                <?php else: ?>
+                    <div class="no-preview">
+                        <span>No Preview Available</span>
+                    </div>
+                <?php endif; ?>
+
+
             </div>
         </div>
     <?php endforeach; ?>

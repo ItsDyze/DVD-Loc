@@ -4,6 +4,7 @@ namespace Services
 {
 
     use Exception;
+    use Models\DVDLightModel;
     use Models\DVDModel;
     use Models\QueryModel\DVDQueryModel;
     use Utils\Query\InsertQueryBuilder;
@@ -89,7 +90,7 @@ namespace Services
             return $result;
         }
 
-        public function getById($id):?DVDModel
+        public function getById($id)
         {
             $result = array();
             $queryBuilder = (new QueryBuilder())
@@ -100,6 +101,26 @@ namespace Services
             $query = $queryBuilder->getQuery();
 
             $queryResult = $this->fetchStatement($query->sql, $query->params, DVDModel::class);
+
+            if($queryResult )
+            {
+                return $queryResult;
+            }
+
+            return null;
+        }
+
+        public function getLightModelById($id)
+        {
+            $result = array();
+            $queryBuilder = (new QueryBuilder())
+                ->select(["Id", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "Quantity", "Price", "Year", "Image", "TypeId"])
+                ->from("dvds")
+                ->where("Id", "=", $id);
+
+            $query = $queryBuilder->getQuery();
+
+            $queryResult = $this->fetchStatement($query->sql, $query->params, DVDLightModel::class);
 
             if($queryResult )
             {
