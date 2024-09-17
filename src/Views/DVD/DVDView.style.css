@@ -1,0 +1,40 @@
+.img-preview {
+    max-width: 256px;
+    min-width: 128px;
+}
+
+.product-detail {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #3B4252;
+    height: 100%;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.summary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.details>div {
+    flex-grow: 1;
+}
+
+.details h3 {
+    text-align: left;
+    color: white;
+}

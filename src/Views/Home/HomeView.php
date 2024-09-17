@@ -21,7 +21,7 @@ namespace Views\Home
         {
             $layoutData = new LayoutViewModel();
             $layoutData -> pageSubTitle = $this->subTitle;
-            parent::renderLayout($layoutData, $this->data);
+            parent::renderLayout($layoutData, $this->data, true);
         }
     }
 }

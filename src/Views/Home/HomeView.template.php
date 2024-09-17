@@ -3,21 +3,78 @@
     <button type="submit" class="search-button" onclick="search()">Filter</button>
 </div>
 
-<div class="card-container">
-    <?php foreach ($data->DVDs as $row): ?>
-        <div class="card clickable" onclick="document.location.href='/dvd/<?php echo $row->Id; ?>'">
-            <div class="card-content">
-                <h3><?php echo $row->LocalTitle; ?></h3>
-                <?php if($row->Image): ?>
-                    <img src="<?php echo $row->Image; ?>" alt="preview" />
-                <?php else: ?>
-                    <div class="no-preview">
-                        <span>No Preview Available</span>
-                    </div>
-                <?php endif; ?>
+
+<div class="home-category">
+    <h3>
+        Highlights
+    </h3>
+    <div class="card-container">
+
+        <?php foreach ($data->DVDs as $row): ?>
+            <div class="card clickable" onclick="document.location.href='/dvd/<?php echo $row->Id; ?>'">
+                <div class="card-content">
+                    <?php if($row->Image): ?>
+                        <img src="<?php echo $row->Image; ?>" alt="preview" />
+                    <?php else: ?>
+                        <div class="no-preview">
+                            <span>No Preview Available</span>
+                        </div>
+                    <?php endif; ?>
 
 
+                </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
+
+</div>
+
+<div class="home-category">
+    <h3>
+        Films
+    </h3>
+    <div class="card-container">
+
+        <?php foreach ($data->DVDs as $row): ?>
+            <div class="card clickable" onclick="document.location.href='/dvd/<?php echo $row->Id; ?>'">
+                <div class="card-content">
+                    <?php if($row->Image): ?>
+                        <img src="<?php echo $row->Image; ?>" alt="preview" />
+                    <?php else: ?>
+                        <div class="no-preview">
+                            <span>No Preview Available</span>
+                        </div>
+                    <?php endif; ?>
+
+
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+</div>
+
+<div class="home-category">
+    <h3>
+        Series
+    </h3>
+    <div class="card-container">
+
+        <?php foreach ($data->DVDs as $row): ?>
+            <div class="card clickable" onclick="document.location.href='/dvd/<?php echo $row->Id; ?>'">
+                <div class="card-content">
+                    <?php if($row->Image): ?>
+                        <img src="<?php echo $row->Image; ?>" alt="preview" />
+                    <?php else: ?>
+                        <div class="no-preview">
+                            <span>No Preview Available</span>
+                        </div>
+                    <?php endif; ?>
+
+
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
 </div>

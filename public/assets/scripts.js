@@ -65,3 +65,17 @@ function resizeAndPreview(input, base64, maxWidth, maxHeight, cb) {
         cb(resizedBase64)
     }
 }
+
+function toggleSidenav()
+{
+    document.getElementById('sidenav').classList.toggle('active')
+    document.getElementById('menu-backdrop').classList.toggle('active')
+
+}
+
+function toggleCart()
+{
+    document.getElementById('cart-nav').classList.toggle('active')
+    document.getElementById('cart-backdrop').classList.toggle('active')
+
+}

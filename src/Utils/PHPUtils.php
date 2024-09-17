@@ -22,4 +22,9 @@ class PHPUtils
             strstr(strstr(serialize($instance), '"'), ':')
         ));
     }
+
+    public static function IsNullOrEmpty(string|null $value)
+    {
+        return $value === null || trim($value) === '';
+    }
 }

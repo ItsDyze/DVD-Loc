@@ -35,7 +35,14 @@ namespace Utils\Query
 
         public function where($column, $operator, $value) {
             $this->where[] = "$column $operator ?";
-            $this->params[] = $value;
+            if($operator == 'LIKE')
+            {
+                $this->params[] = "%".$value."%";
+            }
+            else
+            {
+                $this->params[] = $value;
+            }
             return $this;
         }
 

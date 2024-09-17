@@ -1,4 +1,3 @@
-
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -10,89 +9,134 @@
 header {
     display: flex;
     flex: 0.5;
-    background: #333;
+    max-height: 128px;
+    min-height: 64px;
     color: #FFFFFF;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    padding: 10px;
     text-align: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     background:  linear-gradient(135deg, #FF5E62, #FF9966, #F5E050);
-    background-clip: padding-box;
+    overflow: hidden;
 }
 
 header h1 a {
+    margin-left: 16px;
     text-decoration: none;
-    color: #FFFFFF;
+    color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 main {
     display: flex;
     flex: 9;
-    padding: 50px;
-    overflow: hidden;
     flex-direction: column;
+    overflow: auto;
 }
 
 
-
-footer {
-    flex: 0.5;
-    color: #FFFFFF;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    padding: 2px;
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    background:  linear-gradient(135deg, #FF5E62, #FF9966, #F5E050);
-    background-clip: padding-box;
-}
 
 /*
     Making a menu in native is a PAIN
  */
 
-.login-btn {
-    position: relative;
-    display: inline-block;
-    margin: 0 64px;
-    cursor: pointer;
-}
-
-.user-menu {
-    position: relative;
-    display: inline-block;
-    margin: 0 64px;
-}
-
-.menu-items {
+.backdrop {
     display: none;
     position: absolute;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    background: #fff;
-    border: 1px solid #ccc;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: #000000b3;
+    backdrop-filter: blur(2px);
 }
 
-.menu-items li {
-    padding: 5px 10px;
-}
-
-.menu-items li a {
-    text-decoration: none;
-    color: #000;
-}
-
-.user img{
-    height: 32px;
-    width: 32px;
-}
-
-.user:hover + .menu-items,
-.menu-items:hover {
+.backdrop.active {
     display: block;
 }
 
+
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: -250px;
+    background-color: #FF5E62;
+    padding-top: 60px;
+    transition: left 0.5s ease;
+}
+
+.cart-nav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: -250px;
+    background-color: #FF5E62;
+    padding-top: 60px;
+    transition: left 0.5s ease;
+}
+
+
+.sidenav a {
+    padding: 5px;
+    text-align: right;
+    text-decoration: none;
+    font-size: 2em;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.sidenav a:hover {
+    color: #111;
+}
+
+.sidenav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidenav.active {
+    left: 0;
+}
+
+.cart-nav.active {
+    right: 0;
+}
+
+.sidenav .close {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+}
+
+#openBtn {
+    margin: 5px 0;
+}
+
+.burger-icon span {
+    display: block;
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+}
+
+a.sensitive {
+    color: red;
+}
+
+#openCart {
+    align-self: auto;
+    text-align: right;
+    flex-grow: 1;
+    padding: 5px;
+}

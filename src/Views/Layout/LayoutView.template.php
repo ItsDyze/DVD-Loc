@@ -21,24 +21,11 @@
         <header>
             <?php include "Components/Menu.template.php"; ?>
             <h1><a href="/">DVD-Loc</a></h1>
-            <?php
-                if(!$this->layoutData->isLoggedIn)
-                {
-                    include "Components/LoginBtn.template.php";
-                }
-                else
-                {
-                    include "Components/AccountMenu.template.php";
-                }
-
-            ?>
+            <?php include "Components/Cart.template.php"; ?>
         </header>
         <main>
             <?php echo $this->subContent ?>
         </main>
-        <footer>
-            <p>Dessiné, conçu, développé et hébergé par Dylan Zelmar</p>
-        </footer>
     </div>
 </body>
 </html>

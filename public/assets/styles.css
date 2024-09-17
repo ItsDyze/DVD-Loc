@@ -13,17 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #2B2D42, #4A4E69);
-}
-
-header, footer {
-    background-color: #f4f4f4;
-    padding: 10px;
-    text-align: center;
-}
-
-main {
-    padding: 20px;
+    background: #2B2D42;
 }
 
 form {
@@ -33,6 +23,7 @@ form {
     width: 100%;
     max-width: 400px;
 }
+
 button {
     background: #81A1C1;
     color: #FFFFFF;

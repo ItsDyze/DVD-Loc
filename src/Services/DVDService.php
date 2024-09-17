@@ -10,6 +10,7 @@ namespace Services
     use Utils\Query\InsertQueryBuilder;
     use Utils\Query\QueryBuilder;
     use Utils\Query\UpdateQueryBuilder;
+    use Utils\PHPUtils;
 
     class DVDService extends DataService
     {
@@ -30,10 +31,9 @@ namespace Services
                     $queryBuilder->where("IsOffered", "=", $queryModel->IsOffered);
                 }
 
-                if($queryModel->Search !== null)
+                if(!PHPUtils::IsNullOrEmpty($queryModel->Search))
                 {
-                    $queryBuilder->where("Title", "LIKE", "%" . $queryModel->Search. "%");
-                    $queryBuilder->where("LocalTitle", "LIKE", "%" . $queryModel->Search. "%");
+                    $queryBuilder->where("UPPER(LocalTitle)", "LIKE", strtoupper($queryModel->Search));
                 }
             }
 
@@ -62,14 +62,12 @@ namespace Services
                 $queryBuilder->where("IsOffered", "=", $queryModel->IsOffered);
             }
 
-            if($queryModel->Search !== null)
+            if(!PHPUtils::IsNullOrEmpty($queryModel->Search))
             {
-                $queryBuilder->where("Title", "LIKE", "%" . $queryModel->Search. "%");
-                $queryBuilder->where("LocalTitle", "LIKE", "%" . $queryModel->Search. "%");
+                $queryBuilder->where("UPPER(LocalTitle)", "LIKE", strtoupper($queryModel->Search));
             }
 
-            if($queryModel->OrderBy !== null &&
-                $queryModel->OrderBy !== "" &&
+            if(!PHPUtils::IsNullOrEmpty($queryModel->OrderBy) &&
                 $this->isAllowedOrderColumn($queryModel->OrderBy))
             {
                 $queryBuilder->orderBy($queryModel->OrderBy, $queryModel->OrderDesc);
