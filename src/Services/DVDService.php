@@ -3,10 +3,9 @@
 namespace Services
 {
 
-    use Exception;
     use Models\DVDLightModel;
     use Models\DVDModel;
-    use Models\QueryModel\DVDQueryModel;
+    use Models\QueryModel\BaseQueryModel;
     use Utils\Query\InsertQueryBuilder;
     use Utils\Query\QueryBuilder;
     use Utils\Query\UpdateQueryBuilder;
@@ -19,24 +18,21 @@ namespace Services
             parent::__construct();
         }
 
-        public function getCount(DVDQueryModel $queryModel = null):int
+        public function getCount($isOffered = null, BaseQueryModel $queryModel = null):int
         {
             $queryBuilder = (new QueryBuilder())
                 ->select("Count(id)")
                 ->from("dvds");
-            if($queryModel)
-            {
-                if($queryModel->IsOffered !== null)
-                {
-                    $queryBuilder->where("IsOffered", "=", $queryModel->IsOffered);
-                }
 
-                if(!PHPUtils::IsNullOrEmpty($queryModel->Search))
-                {
-                    $queryBuilder->where("UPPER(LocalTitle)", "LIKE", strtoupper($queryModel->Search));
-                }
+            if($isOffered !== null)
+            {
+                $queryBuilder->where("IsOffered", "=", $isOffered);
             }
 
+            if($queryModel && !PHPUtils::IsNullOrEmpty($queryModel->Search))
+            {
+                $queryBuilder->where("UPPER(LocalTitle)", "LIKE", strtoupper($queryModel->Search));
+            }
 
             $query = $queryBuilder->getQuery();
             $queryResult = $this->fetchValue($query->sql, $query->params);
@@ -49,17 +45,17 @@ namespace Services
             return 0;
         }
 
-        public function getAll(DVDQueryModel $queryModel): array
+        public function getAll(BaseQueryModel $queryModel, $isOffered = null): array
         {
             $result = array();
             $queryBuilder = (new QueryBuilder())
-                ->select(["Id", "LocalTitle", "Notation", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId"])
+                ->select(["Id", "LocalTitle", "Notation", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId", "GenreId"])
                 ->from("dvds")
                 ->limit($queryModel->Offset, $queryModel->Limit);
 
-            if($queryModel->IsOffered !== null)
+            if($isOffered !== null)
             {
-                $queryBuilder->where("IsOffered", "=", $queryModel->IsOffered);
+                $queryBuilder->where("IsOffered", "=", $isOffered);
             }
 
             if(!PHPUtils::IsNullOrEmpty($queryModel->Search))
@@ -90,21 +86,18 @@ namespace Services
 
         public function getById($id)
         {
-            $result = array();
             $queryBuilder = (new QueryBuilder())
-                ->select(["Id", "Title", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId"])
+                ->select(["Id", "Title", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId", "GenreId"])
                 ->from("dvds")
                 ->where("Id", "=", $id);
 
             $query = $queryBuilder->getQuery();
-
             $queryResult = $this->fetchStatement($query->sql, $query->params, DVDModel::class);
 
             if($queryResult )
             {
                 return $queryResult;
             }
-
             return null;
         }
 
@@ -112,7 +105,7 @@ namespace Services
         {
             $result = array();
             $queryBuilder = (new QueryBuilder())
-                ->select(["Id", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "Quantity", "Price", "Year", "Image", "TypeId"])
+                ->select(["Id", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "Quantity", "Price", "Year", "Image", "TypeId", "GenreId"])
                 ->from("dvds")
                 ->where("Id", "=", $id);
 
@@ -144,6 +137,7 @@ namespace Services
                 ->set("Year", $dvd->Year)
                 ->set("Image", $dvd->Image)
                 ->set("TypeId", $dvd->TypeId)
+                ->set("GenreId", $dvd->GenreId)
 
                 ->where("Id", "=", $dvd->Id);
 
@@ -167,7 +161,8 @@ namespace Services
                 ->value("Price", $dvd->Price)
                 ->value("Year", $dvd->Year)
                 ->value("Image", $dvd->Image)
-                ->value("TypeId", $dvd->TypeId);
+                ->value("TypeId", $dvd->TypeId)
+                ->value("GenreId", $dvd->GenreId);
 
             $query = $queryBuilder->getQuery();
 

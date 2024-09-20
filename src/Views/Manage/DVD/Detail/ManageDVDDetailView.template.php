@@ -6,7 +6,7 @@ use Utils\Components\ComponentsEnum;
 use Utils\ComponentsUtils;
 
 $componentBuilder = new ComponentsUtils();
-$action = match ($data->state)
+$action = match ($data->State)
 {
     ManageDVDDetailViewStateEnum::Create => "POST",
     ManageDVDDetailViewStateEnum::Update => "PUT",
@@ -38,6 +38,8 @@ $action = match ($data->state)
             <?php echo $componentBuilder->getTextComponent("LocalTitle", "Titre local", "Titre local", $data->DVD->LocalTitle, true, false); ?>
             <?php echo $componentBuilder->getAreaComponent("Synopsis", "Synopsis", "Synopsis", $data->DVD->Synopsis, true, false); ?>
             <?php echo $componentBuilder->getNumberComponent("Year", "Année de sortie", $data->DVD->Year, 1800, 2500, 1, false, false); ?>
+            <?php echo $componentBuilder->getSelectComponent("TypeId", "Type", $data->DVD->TypeId, $data->Types, true, false); ?>
+            <?php echo $componentBuilder->getSelectComponent("GenreId", "Genre", $data->DVD->GenreId, $data->Genres, true, false); ?>
             <?php
                 echo $componentBuilder->getImageComponent("Image", "Image", $data->DVD->Image, false, false);
             ?>

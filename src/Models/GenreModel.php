@@ -2,8 +2,6 @@
 
 namespace Models;
 
-class GenreModel
+class GenreModel extends BaseSelectItem
 {
-    public int $Id;
-    public string $Name;
 }

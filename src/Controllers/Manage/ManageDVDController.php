@@ -5,11 +5,13 @@ namespace Controllers\Manage
 
     use Controllers\BaseController;
     use Models\DVDModel;
-    use Models\QueryModel\DVDQueryModel;
+    use Models\QueryModel\ManageDVDQueryModel;
     use Models\ViewModels\ManageDVDDetailViewModel;
     use Models\ViewModels\ManageDVDDetailViewStateEnum;
     use Models\ViewModels\ManageDVDListViewModel;
     use Services\DVDService;
+    use Services\GenreService;
+    use Services\TypeService;
     use Utils\JWTUtils;
     use Views\Manage\DVD\Detail\ManageDVDDetailView;
     use Views\Manage\DVD\List\ManageDVDListView;
@@ -39,7 +41,7 @@ namespace Controllers\Manage
             $viewModel = new ManageDVDListViewModel();
             $service = DVDService::getInstance();
 
-            $queryModel = new DVDQueryModel();
+            $queryModel = new ManageDVDQueryModel();
             if(!empty($_GET))
             {
                 $queryModel->setFromQueryString($_GET);
@@ -51,8 +53,8 @@ namespace Controllers\Manage
             }
 
             $viewModel->Query = $queryModel;
-            $viewModel->FilteredCount = $service->getCount($queryModel);
-            $viewModel->DVDs = $service->getAll($queryModel);
+            $viewModel->FilteredCount = $service->getCount($queryModel->IsOffered, $queryModel);
+            $viewModel->DVDs = $service->getAll($queryModel, $queryModel->IsOffered);
             $viewModel->TotalPages = ceil($viewModel->FilteredCount / $queryModel->Limit);
             $viewModel->CurrentPage = ($queryModel->Offset / $queryModel->Limit) + 1;
 
@@ -65,9 +67,15 @@ namespace Controllers\Manage
             $viewModel = new ManageDVDDetailViewModel();
             $service = DVDService::getInstance();
 
+            $genreService = GenreService::getInstance();
+            $typeService = TypeService::getInstance();
+
+            $viewModel->Genres  = $genreService->getAll();
+            $viewModel->Types  = $typeService->getAll();
+
             if($id === -1)
             {
-                $viewModel->state = ManageDVDDetailViewStateEnum::Create;
+                $viewModel->State = ManageDVDDetailViewStateEnum::Create;
                 $model = new DVDModel();
                 $model->Title = "";
                 $model->LocalTitle = "";
@@ -81,7 +89,7 @@ namespace Controllers\Manage
                 $model->Year = 0;
                 $model->TypeId = null;
                 $model->Image = null;
-                $model->Genres = [];
+                $model->GenreId = null;
 
                 $viewModel->DVD = $model;
 
@@ -89,9 +97,7 @@ namespace Controllers\Manage
             else
             {
                 $viewModel->DVD = $service->getById($id);
-                //$viewModel->DVD->ImageBase64 = base64_encode($viewModel->DVD->Image);
-                //$viewModel->DVD->ImageSignature = ImageUtils::getImageTypeFromSignature($viewModel->DVD->Image);
-                $viewModel->state = ManageDVDDetailViewStateEnum::Update;
+                $viewModel->State = ManageDVDDetailViewStateEnum::Update;
             }
 
             $controller = new ManageDVDDetailView($viewModel);
@@ -145,7 +151,7 @@ namespace Controllers\Manage
             $model->Price = $_POST["Price"];
             $model->Year = $_POST["Year"];
             $model->TypeId = !is_null($_POST["TypeId"]) ? intval($_POST["TypeId"]) : null;
-            $model->Genres = $_POST["Genres"] && is_array($_POST["Genres"]) ? $_POST["Genres"] : null;
+            $model->GenreId = !is_null($_POST["GenreId"]) ? intval($_POST["GenreId"]) : null;
             $model->Image = $_POST["Image"];
         }
     }

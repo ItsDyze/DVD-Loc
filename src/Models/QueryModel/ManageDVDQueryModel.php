@@ -2,7 +2,7 @@
 
 namespace Models\QueryModel
 {
-    class DVDQueryModel extends BaseQueryModel
+    class ManageDVDQueryModel extends BaseQueryModel
     {
         public bool|null $IsOffered = null;
 

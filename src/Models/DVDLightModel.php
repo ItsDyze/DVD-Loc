@@ -16,6 +16,5 @@ class DVDLightModel
     public ?int $Year;
     public ?string $Image;
     public ?int $TypeId;
-    public ?string $Type;
-    public ?array $Genres;
+    public ?int $GenreId;
 }

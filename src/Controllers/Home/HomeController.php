@@ -3,7 +3,8 @@ namespace Controllers\Home
 {
 
     use Controllers\BaseController;
-    use Models\QueryModel\DVDQueryModel;
+    use Models\CollectionTypeEnum;
+    use Models\DVDCollection;
     use Models\QueryModel\HomeQueryModel;
     use Models\ViewModels\HomeViewModel;
     use Services\DVDService;
@@ -15,7 +16,7 @@ namespace Controllers\Home
             $data = new HomeViewModel();
             $service = DVDService::getInstance();
 
-            $queryModel = new DVDQueryModel();
+            $queryModel = new HomeQueryModel();
             if(!empty($_GET))
             {
                 $queryModel->setFromQueryString($_GET);
@@ -26,14 +27,15 @@ namespace Controllers\Home
                 die();
             }
 
-            // override to prevent customers to see not-in-offer DVDs
-            $queryModel->IsOffered = 1;
-
             $data->Query = $queryModel;
-            $data->FilteredCount = $service->getCount($queryModel);
-            $data->DVDs = $service->getAll($queryModel);
-            $data->TotalPages = ceil($data->FilteredCount / $queryModel->Limit);
-            $data->CurrentPage = ($queryModel->Offset / $queryModel->Limit) + 1;
+            $data->DVDs = $service->getAll($queryModel, true);
+            $data->DVDCollections = [];
+            $highlightCollection = new DVDCollection();
+            $highlightCollection->Name = "En avant";
+            $highlightCollection->CollectionType = CollectionTypeEnum::Highlight;
+            $highlightCollection->DVDs = $service->getAll($queryModel, true);
+            $data->DVDCollections[] = $highlightCollection;
+
 
             $view = new HomeView($data);
             $view->render();

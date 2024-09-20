@@ -8,8 +8,10 @@ namespace Models\ViewModels
 
     class ManageDVDDetailViewModel implements IViewModel
     {
+        public array $Types;
+        public array $Genres;
         public DVDModel $DVD;
-        public ManageDVDDetailViewStateEnum $state;
+        public ManageDVDDetailViewStateEnum $State;
     }
 }
 

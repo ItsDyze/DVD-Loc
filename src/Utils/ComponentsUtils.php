@@ -7,6 +7,7 @@ namespace Utils
     use Utils\Components\FormAreaComponent\FormAreaComponent;
     use Utils\Components\FormImageComponent\FormImageComponent;
     use Utils\Components\FormNumberComponent\FormNumberComponent;
+    use Utils\Components\FormSelectComponent\FormSelectComponent;
     use Utils\Components\FormTextComponent\FormTextComponent;
     use Utils\Components\FormToggleComponent\FormToggleComponent;
 
@@ -16,6 +17,11 @@ namespace Utils
         public static function getTextComponent($name, $label, $placeholder, $value, $required, $readOnly):string
         {
             $comp = new FormTextComponent($name, $label, $placeholder, $value, $required, $readOnly);
+            return $comp->getRenderedComponent();
+        }
+        public static function getSelectComponent($name, $label, $value, $availableValues, $required, $readOnly):string
+        {
+            $comp = new FormSelectComponent($name, $label, $value, $availableValues, $required, $readOnly);
             return $comp->getRenderedComponent();
         }
         public static function getAreaComponent($name, $label, $placeholder, $value, $required, $readOnly):string
