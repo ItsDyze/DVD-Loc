@@ -84,6 +84,175 @@ namespace Services
             return $result;
         }
 
+        public function getHighlights($isPreview, BaseQueryModel $queryModel = null): array
+        {
+            if($isPreview)
+            {
+                $queryModel = new BaseQueryModel();
+                $queryModel->OrderBy = "Notation";
+                $queryModel->OrderDesc = true;
+                $queryModel->Limit = 10;
+                $queryModel->Offset = 0;
+            }
+
+            $result = array();
+            $queryBuilder = (new QueryBuilder())
+                ->select(["Id", "LocalTitle", "Notation", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId", "GenreId"])
+                ->from("dvds")
+                ->where("IsOffered", "=", 1)
+                ->limit($queryModel->Offset, $queryModel->Limit);
+
+
+            if(!PHPUtils::IsNullOrEmpty($queryModel->Search))
+            {
+                $queryBuilder->where("UPPER(LocalTitle)", "LIKE", strtoupper($queryModel->Search));
+            }
+
+            if(!PHPUtils::IsNullOrEmpty($queryModel->OrderBy) &&
+                $this->isAllowedOrderColumn($queryModel->OrderBy))
+            {
+                $queryBuilder->orderBy($queryModel->OrderBy, $queryModel->OrderDesc);
+            }
+
+            $query = $queryBuilder->getQuery();
+
+            $queryResult = $this->fetchAllStatement($query->sql, $query->params);
+
+            if($queryResult && count($queryResult) > 0)
+            {
+                foreach($queryResult as $row)
+                {
+                    $result[] = $row;
+                }
+            }
+
+            return $result;
+        }
+
+        public function getByGenre($genreId): array
+        {
+            $queryModel = new BaseQueryModel();
+            $queryModel->OrderBy = "Notation";
+            $queryModel->OrderDesc = true;
+            $queryModel->Limit = 10;
+            $queryModel->Offset = 0;
+
+            $result = array();
+            $queryBuilder = (new QueryBuilder())
+                ->select(["Id", "LocalTitle", "Notation", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId", "GenreId"])
+                ->from("dvds")
+                ->where("GenreId", "=", $genreId)
+                ->limit($queryModel->Offset, $queryModel->Limit);
+
+
+
+            if(!PHPUtils::IsNullOrEmpty($queryModel->OrderBy) &&
+                $this->isAllowedOrderColumn($queryModel->OrderBy))
+            {
+                $queryBuilder->orderBy($queryModel->OrderBy, $queryModel->OrderDesc);
+            }
+
+            $query = $queryBuilder->getQuery();
+
+            $queryResult = $this->fetchAllStatement($query->sql, $query->params);
+
+            if($queryResult && count($queryResult) > 0)
+            {
+                foreach($queryResult as $row)
+                {
+                    $result[] = $row;
+                }
+            }
+
+            return $result;
+        }
+
+        public function getByType($typeId): array
+        {
+            $queryModel = new BaseQueryModel();
+            $queryModel->OrderBy = "Notation";
+            $queryModel->OrderDesc = true;
+            $queryModel->Limit = 10;
+            $queryModel->Offset = 0;
+
+            $result = array();
+            $queryBuilder = (new QueryBuilder())
+                ->select(["Id", "LocalTitle", "Notation", "Certification", "IsOffered", "Quantity", "Price", "Year", "Image", "TypeId", "GenreId"])
+                ->from("dvds")
+                ->where("TypeId", "=", $typeId)
+                ->limit($queryModel->Offset, $queryModel->Limit);
+
+
+
+            if(!PHPUtils::IsNullOrEmpty($queryModel->OrderBy) &&
+                $this->isAllowedOrderColumn($queryModel->OrderBy))
+            {
+                $queryBuilder->orderBy($queryModel->OrderBy, $queryModel->OrderDesc);
+            }
+
+            $query = $queryBuilder->getQuery();
+
+            $queryResult = $this->fetchAllStatement($query->sql, $query->params);
+
+            if($queryResult && count($queryResult) > 0)
+            {
+                foreach($queryResult as $row)
+                {
+                    $result[] = $row;
+                }
+            }
+
+            return $result;
+        }
+
+        public function getMostPopularGenres()
+        {
+            $result = array();
+            $query = "SELECT d.GenreId as Id, g.Name, COUNT(d.Id) ".
+                        "FROM dvds d " .
+                        "JOIN genres g ON g.Id = d.GenreId " .
+                        "WHERE IsOffered = 1 ".
+                        "GROUP BY d.GenreId, g.Name ".
+                        "ORDER BY COUNT(d.Id) DESC " .
+                        "LIMIT 5";
+
+            $queryResult = $this->fetchAllStatement($query, []);
+
+            if($queryResult && count($queryResult) > 0)
+            {
+                foreach($queryResult as $row)
+                {
+                    $result[] = $row;
+                }
+            }
+
+            return $result;
+        }
+
+        public function getMostPopularTypes()
+        {
+            $result = array();
+            $query = "SELECT d.TypeId as Id, t.Name, COUNT(d.Id) ".
+                "FROM dvds d " .
+                "JOIN types t ON t.Id = d.TypeId " .
+                "WHERE IsOffered = 1 ".
+                "GROUP BY d.TypeId, t.Name ".
+                "ORDER BY COUNT(d.Id) DESC " .
+                "LIMIT 5";
+
+            $queryResult = $this->fetchAllStatement($query, []);
+
+            if($queryResult && count($queryResult) > 0)
+            {
+                foreach($queryResult as $row)
+                {
+                    $result[] = $row;
+                }
+            }
+
+            return $result;
+        }
+
         public function getById($id)
         {
             $queryBuilder = (new QueryBuilder())
@@ -171,7 +340,7 @@ namespace Services
 
         function isAllowedOrderColumn(string $column): bool
         {
-            $allowedOrderColumns = array("Quantity", "Year", "Title", "IsOffered", "Price");
+            $allowedOrderColumns = array("Quantity", "Year", "Title", "IsOffered", "Price", "Notation");
             return in_array($column, $allowedOrderColumns);
         }
     }
