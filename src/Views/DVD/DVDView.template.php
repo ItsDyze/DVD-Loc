@@ -3,6 +3,9 @@
         echo $data->dvd->LocalTitle;
     ?>
 </h2>
+<div class="button" onclick="addToCart(<?php echo $data->dvd->Id; ?>, '<?php echo $data->dvd->LocalTitle; ?>')">
+    <img alt="cart icon" src="/assets/add-to-cart.svg" width="32px" height="32px"/>
+</div>
 <div class="product-detail">
     <div class="summary">
         <img src="<?php echo $data->dvd->Image;  ?>" class="img-preview"/>
@@ -47,5 +50,7 @@
             <?php echo $data->dvd->Note; ?>
         </div>
     </div>
+
+
 </div>
 

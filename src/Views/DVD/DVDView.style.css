@@ -4,6 +4,7 @@
 }
 
 .product-detail {
+    position: relative;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -37,4 +38,16 @@
 .details h3 {
     text-align: left;
     color: white;
+}
+
+.button {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #27994e;
+    color: white;
+    cursor: pointer;
 }

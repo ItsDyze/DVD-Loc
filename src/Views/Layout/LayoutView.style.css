@@ -28,6 +28,7 @@ header h1 a {
 }
 
 main {
+    position: relative;
     display: flex;
     flex: 9;
     flex-direction: column;

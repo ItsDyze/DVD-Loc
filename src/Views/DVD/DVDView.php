@@ -21,7 +21,7 @@ namespace Views\DVD
         {
             $layoutData = new LayoutViewModel();
             $layoutData -> pageSubTitle = $this->subTitle;
-            parent::renderLayout($layoutData, $this->data);
+            parent::renderLayout($layoutData, $this->data, true);
         }
     }
 }

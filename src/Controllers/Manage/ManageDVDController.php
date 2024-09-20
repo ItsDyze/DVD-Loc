@@ -150,8 +150,8 @@ namespace Controllers\Manage
             $model->Quantity = $_POST["Quantity"];
             $model->Price = $_POST["Price"];
             $model->Year = $_POST["Year"];
-            $model->TypeId = !is_null($_POST["TypeId"]) ? intval($_POST["TypeId"]) : null;
-            $model->GenreId = !is_null($_POST["GenreId"]) ? intval($_POST["GenreId"]) : null;
+            $model->TypeId = isset($_POST["TypeId"]) ? intval($_POST["TypeId"]) : null;
+            $model->GenreId = isset($_POST["GenreId"]) ? intval($_POST["GenreId"]) : null;
             $model->Image = $_POST["Image"];
         }
     }
