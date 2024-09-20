@@ -5,11 +5,7 @@ function addToCart(pId, pName)
     if(cart && cart.articles)
     {
         let existingArticle = cart.articles.find(x => x.id === pId);
-        if(existingArticle !== undefined)
-        {
-            existingArticle.quantity++;
-        }
-        else
+        if(existingArticle === undefined)
         {
             cart.articles.push({
                 id: pId,
@@ -30,4 +26,5 @@ function addToCart(pId, pName)
     }
 
     createCookie("cart", cart, 30);
+    location.reload();
 }

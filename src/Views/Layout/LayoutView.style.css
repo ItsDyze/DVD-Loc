@@ -98,7 +98,7 @@ main {
     color: #111;
 }
 
-.sidenav ul {
+ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -140,4 +140,41 @@ a.sensitive {
     text-align: right;
     flex-grow: 1;
     padding: 5px;
+}
+
+.cart-nav .close {
+    position: absolute;
+    top: 0;
+    left: 25px;
+    font-size: 36px;
+}
+
+.cart-nav a {
+    padding: 5px;
+    text-align: right;
+    text-decoration: none;
+    font-size: 2em;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.cart-nav a:hover {
+    color: #111;
+}
+
+.cart-item a {
+    font-size: 1em;
+    text-align: center;
+}
+
+.cart-remove {
+    background-color: #353535;
+    cursor:pointer;
+}
+
+.cart-remove:hover {
+    background-color: #575757;
+    cursor:pointer;
 }

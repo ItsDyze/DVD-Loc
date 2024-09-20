@@ -110,3 +110,18 @@ function readCookie(name) {
 function eraseCookie(name) {
     createCookie(name,"",-1);
 }
+
+function removeFromCart(pId)
+{
+    let cart = readCookie("cart");
+
+    if(cart && cart.articles)
+    {
+        let existingArticle = cart.articles.find(x => x.id === pId);
+
+        cart.articles = cart.articles.filter(x => x.id !== pId);
+    }
+
+    createCookie("cart", cart, 30);
+    location.reload();
+}
