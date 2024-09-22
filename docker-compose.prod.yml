@@ -1,5 +1,6 @@
 services:
   webapp:
+    restart: always
     build: .
     ports:
       - "8089:80"
@@ -16,6 +17,7 @@ services:
 
   db:
     image: mysql
+    restart: always
     command: --lower_case_table_names=1
     ports:
       - "3306:3306"
@@ -32,6 +34,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    restart: always
     links:
       - db:db
     ports:
