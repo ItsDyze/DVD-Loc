@@ -1,199 +1,176 @@
-CREATE DATABASE IF NOT EXISTS `c218` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `c218`;
+START TRANSACTION;
 
-CREATE TABLE Users
-(
-    Id          INT          NOT NULL UNIQUE AUTO_INCREMENT,
-    LastName    VARCHAR(250) NOT NULL,
-    FirstName   VARCHAR(250) NOT NULL,
-    Email       VARCHAR(512) NOT NULL,
-    PhoneNumber VARCHAR(12),
-    Password    VARCHAR(128),
-    PRIMARY KEY (Id)
-);
+CREATE DATABASE IF NOT EXISTS c218 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE c218;
 
-CREATE TABLE Countries
-(
-    Id          INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name        VARCHAR(50) NOT NULL,
-    CustomOrder INT,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE addresses (
+                           Id int NOT NULL,
+                           PostCode varchar(10)  DEFAULT NULL,
+                           AddressLine varchar(250)  DEFAULT NULL,
+                           CountryId int DEFAULT NULL,
+                           UserId int DEFAULT NULL
+) ;
 
-CREATE TABLE Addresses
-(
-    Id          INT NOT NULL UNIQUE AUTO_INCREMENT,
-    PostCode    NVARCHAR(10),
-    AddressLine NVARCHAR(250),
-    CountryId   INT,
-    UserId      INT,
-    FOREIGN KEY FK_Address_User (UserId) REFERENCES Users (Id),
-    FOREIGN KEY FK_Address_Country (CountryId) REFERENCES Countries (Id),
-    PRIMARY KEY (Id)
-);
+CREATE TABLE articles (
+                          Id int NOT NULL,
+                          DVDId int NOT NULL,
+                          Price decimal(10,0) NOT NULL,
+                          OrderQuantity int NOT NULL,
+                          ReturnedQuantity int NOT NULL
+) ;
 
-CREATE TABLE Types
-(
-    Id          INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name        VARCHAR(50) NOT NULL,
-    NameLocal   VARCHAR(50) NOT NULL,
-    CustomOrder INT,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE countries (
+                           Id int NOT NULL,
+                           Name varchar(50) NOT NULL,
+                           CustomOrder int DEFAULT NULL
+) ;
 
-CREATE TABLE Genres
-(
-    Id          INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name        VARCHAR(50) NOT NULL,
-    NameLocal   VARCHAR(50) NOT NULL,
-    CustomOrder INT,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE dvds (
+                      Id int NOT NULL,
+                      Title varchar(250)  NOT NULL,
+                      LocalTitle varchar(250)  DEFAULT NULL,
+                      Image longtext,
+                      OriginCountryId int DEFAULT NULL,
+                      Synopsis text,
+                      Notation int DEFAULT NULL,
+                      Note text,
+                      Certification varchar(250)  DEFAULT NULL,
+                      IsOffered tinyint(1) NOT NULL,
+                      Quantity int NOT NULL,
+                      Price decimal(10,0) NOT NULL,
+                      TypeId int DEFAULT NULL,
+                      ExternalKey varchar(10) DEFAULT NULL,
+                      Year int DEFAULT NULL,
+                      GenreId int DEFAULT NULL
+) ;
 
-CREATE TABLE Directors
-(
-    Id   INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE genres (
+                        Id int NOT NULL,
+                        Name varchar(50) NOT NULL,
+                        CustomOrder int DEFAULT NULL,
+                        NameLocal varchar(50) DEFAULT NULL
+) ;
 
-CREATE TABLE Scenarists
-(
-    Id   INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE orders (
+                        Id int NOT NULL,
+                        UserId int NOT NULL,
+                        StatusId int NOT NULL,
+                        TotalPrice decimal(10,0) DEFAULT NULL,
+                        DeliveryDate datetime DEFAULT NULL,
+                        PlannedReturnDate datetime DEFAULT NULL,
+                        ReturnedDate datetime DEFAULT NULL
+) ;
 
-CREATE TABLE Producers
-(
-    Id   INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE roles (
+                       Id int NOT NULL,
+                       Name varchar(50) NOT NULL,
+                       ActorId int DEFAULT NULL,
+                       DVDId int DEFAULT NULL
+) ;
 
-CREATE TABLE Composers
-(
-    Id   INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE statuses (
+                          Id int NOT NULL,
+                          Name varchar(25)  NOT NULL,
+                          CustomOrder int DEFAULT NULL
+) ;
 
-CREATE TABLE Actors
-(
-    Id   INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Id)
-);
+CREATE TABLE `types` (
+                         Id int NOT NULL,
+                         Name varchar(50) NOT NULL,
+                         CustomOrder int DEFAULT NULL,
+                         NameLocal varchar(50) DEFAULT NULL
+) ;
 
-CREATE TABLE Roles
-(
-    Id      INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Name    VARCHAR(50) NOT NULL,
-    ActorId INT,
-    DVDId   INT,
-    FOREIGN KEY FK_Role_Actor (ActorId) REFERENCES Actors(Id),
-    FOREIGN KEY FK_Role_DVD (DVDId) REFERENCES DVDs(Id),
-    PRIMARY KEY (Id)
-);
+CREATE TABLE users (
+                       Id int NOT NULL,
+                       LastName varchar(250) NOT NULL,
+                       FirstName varchar(250) NOT NULL,
+                       Email varchar(512) NOT NULL,
+                       PhoneNumber varchar(12) DEFAULT NULL,
+                       Password varchar(128) DEFAULT NULL
+) ;
 
-CREATE TABLE DVDs
-(
-    Id              INT         NOT NULL UNIQUE AUTO_INCREMENT,
-    Title           NVARCHAR(250) NOT NULL,
-    LocalTitle      NVARCHAR(250),
-    Image           BLOB,
-    OriginCountryId INT,
-    Synopsis        TEXT,
-    Notation        INT,
-    Note            TEXT,
-    Year            INT,
-    Certification   NVARCHAR(10),
-    IsOffered       BOOL NOT NULL,
-    Quantity        INT NOT NULL,
-    Price           DECIMAL NOT NULL,
-    TypeId          INT,
-    FOREIGN KEY FK_DVD_Country (OriginCountryId) REFERENCES Countries(Id),
-    FOREIGN KEY FK_DVD_Type (TypeId) REFERENCES Types(Id),
-    PRIMARY KEY (Id)
-);
 
-CREATE TABLE DVDsGenres
-(
-    DVDId INT NOT NULL,
-    GenreId INT NOT NULL,
-    PRIMARY KEY (DVDId, GenreId),
-    FOREIGN KEY FK_DVDsGenres_DVD(DVDId) REFERENCES DVDs(Id),
-    FOREIGN KEY FK_DVDsGenres_Genre(GenreId) REFERENCES Genres(Id)
-);
+ALTER TABLE addresses
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id),
+    ADD KEY FK_Address_User (UserId),
+    ADD KEY FK_Address_Country (CountryId);
 
-CREATE TABLE DVDsProducers
-(
-    DVDId INT NOT NULL,
-    ProducerId INT NOT NULL,
-    PRIMARY KEY (DVDId, ProducerId),
-    FOREIGN KEY FK_DVDsProducers_DVD(DVDId) REFERENCES DVDs(Id),
-    FOREIGN KEY FK_DVDsProducers_Producer(ProducerId) REFERENCES Producers(Id)
-);
+ALTER TABLE articles
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id),
+    ADD KEY FK_Article_DVD (DVDId);
 
-CREATE TABLE DVDsDirectors
-(
-    DVDId INT NOT NULL,
-    DirectorId INT NOT NULL,
-    PRIMARY KEY (DVDId, DirectorId),
-    FOREIGN KEY FK_DVDsDirectors_DVD(DVDId) REFERENCES DVDs(Id),
-    FOREIGN KEY FK_DVDsDirectors_Director(DirectorId) REFERENCES Directors(Id)
-);
+ALTER TABLE countries
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id);
 
-CREATE TABLE DVDsScenarists
-(
-    DVDId INT NOT NULL,
-    ScenaristId INT NOT NULL,
-    PRIMARY KEY (DVDId, ScenaristId),
-    FOREIGN KEY FK_DVDsScenarists_DVD(DVDId) REFERENCES DVDs(Id),
-    FOREIGN KEY FK_DVDsScenarists_Scenarist(ScenaristId) REFERENCES Scenarists(Id)
-);
+ALTER TABLE dvds
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id),
+    ADD KEY FK_DVD_Country (OriginCountryId),
+    ADD KEY FK_DVD_Type (TypeId),
+    ADD KEY IX_DVDs_ExternalKey (ExternalKey),
+    ADD KEY IX_DVDs_IsOffered (IsOffered),
+    ADD KEY FK_DVD_Genre (GenreId);
 
-CREATE TABLE DVDsComposers
-(
-    DVDId INT NOT NULL,
-    ComposerId INT NOT NULL,
-    PRIMARY KEY (DVDId, ComposerId),
-    FOREIGN KEY FK_DVDsComposers_DVD(DVDId) REFERENCES DVDs(Id),
-    FOREIGN KEY FK_DVDsComposers_Composer(ComposerId) REFERENCES Composers(Id)
-);
+ALTER TABLE genres
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id);
 
-CREATE TABLE Statuses
-(
-    Id INT NOT NULL UNIQUE AUTO_INCREMENT,
-    Name NVARCHAR(25) NOT NULL,
-    CustomOrder INT,
-    PRIMARY KEY (Id)
-);
+ALTER TABLE orders
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id),
+    ADD KEY FK_Order_User (UserId),
+    ADD KEY FK_Order_Statuses (StatusId);
 
-CREATE TABLE Articles
-(
-    Id INT NOT NULL UNIQUE AUTO_INCREMENT,
-    DVDId INT NOT NULL,
-    Price DECIMAL NOT NULL,
-    OrderQuantity INT NOT NULL,
-    ReturnedQuantity INT NOT NULL,
-    FOREIGN KEY FK_Article_DVD (DVDId) REFERENCES DVDs(Id),
-    PRIMARY KEY (Id)
-);
+ALTER TABLE roles
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id),
+    ADD KEY FK_Role_Actor (ActorId),
+    ADD KEY FK_Role_DVD (DVDId);
 
-CREATE TABLE Orders
-(
-    Id INT NOT NULL UNIQUE AUTO_INCREMENT,
-    UserId INT NOT NULL,
-    StatusId INT NOT NULL,
-    TotalPrice DECIMAL,
-    DeliveryDate DATETIME,
-    PlannedReturnDate DATETIME,
-    ReturnedDate DATETIME,
-    PRIMARY KEY (Id),
-    FOREIGN KEY FK_Order_User (UserId) REFERENCES Users(Id),
-    FOREIGN KEY FK_Order_Statuses (StatusId) REFERENCES Statuses(Id)
-);
+ALTER TABLE statuses
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id);
 
+ALTER TABLE types
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id);
+
+ALTER TABLE users
+    ADD PRIMARY KEY (Id),
+    ADD UNIQUE KEY Id (Id);
+
+
+ALTER TABLE addresses
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE articles
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE countries
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE dvds
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE genres
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE orders
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE roles
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE statuses
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE types
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE users
+    MODIFY Id int NOT NULL AUTO_INCREMENT;
 COMMIT;
-

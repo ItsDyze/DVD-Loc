@@ -117,8 +117,6 @@ function removeFromCart(pId)
 
     if(cart && cart.articles)
     {
-        let existingArticle = cart.articles.find(x => x.id === pId);
-
         cart.articles = cart.articles.filter(x => x.id !== pId);
     }
 

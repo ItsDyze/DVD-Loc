@@ -4,7 +4,6 @@ namespace Controllers\Manage
 {
 
     use Controllers\BaseController;
-    use Models\QueryModel\ManageDVDQueryModel;
     use Models\ViewModels\DashboardViewModel;
     use Services\DVDService;
     use Utils\JWTUtils;
@@ -20,7 +19,7 @@ namespace Controllers\Manage
         public function get(): void
         {
             $viewModel = new DashboardViewModel();
-            $service = DVDService::getInstance();
+            $service = new DVDService();
             $viewModel->DVDCount = $service->getCount();
             $viewModel->OfferedDVDCount = $service->getCount(true);
             $view = new DashboardView($viewModel);

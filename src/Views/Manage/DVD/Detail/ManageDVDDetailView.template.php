@@ -1,8 +1,12 @@
 <?php
 
-namespace Views\Manage\DVD\Detail;
+/**
+ * @var ManageDVDDetailViewModel $data
+ */
+
+
+use Models\ViewModels\ManageDVDDetailViewModel;
 use Models\ViewModels\ManageDVDDetailViewStateEnum;
-use Utils\Components\ComponentsEnum;
 use Utils\ComponentsUtils;
 
 $componentBuilder = new ComponentsUtils();

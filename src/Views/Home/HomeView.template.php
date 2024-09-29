@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var HomeViewModel $data
+ */
+use Models\ViewModels\HomeViewModel;
+?>
+
 <div class="search-bar">
     <input id="dvd-search-input" type="text" name="search" placeholder="Search DVDs..." value="<?php echo htmlspecialchars($_GET['Search'] ?? '', ENT_QUOTES); ?>" class="search-input" />
     <button type="submit" class="search-button" onclick="search()">Filter</button>

@@ -14,7 +14,7 @@ namespace Services
     class DVDService extends DataService
     {
 
-        protected function __construct() {
+        function __construct() {
             parent::__construct();
         }
 
@@ -272,7 +272,6 @@ namespace Services
 
         public function getLightModelById($id)
         {
-            $result = array();
             $queryBuilder = (new QueryBuilder())
                 ->select(["Id", "LocalTitle", "Synopsis", "Notation", "Note", "Certification", "Quantity", "Price", "Year", "Image", "TypeId", "GenreId"])
                 ->from("dvds")
@@ -312,7 +311,7 @@ namespace Services
 
             $query = $queryBuilder->getQuery();
 
-            $queryResult = $this->fetchStatement($query->sql, $query->params, DVDModel::class);
+            $this->fetchStatement($query->sql, $query->params, DVDModel::class);
         }
 
         public function insert(DVDModel $dvd)

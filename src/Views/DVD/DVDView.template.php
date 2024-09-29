@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * @var DVDViewModel $data
+ */
+
+use Models\ViewModels\DVDViewModel;
+
+?>
+
 <h2>
     <?php
         echo $data->dvd->LocalTitle;
@@ -8,7 +18,7 @@
 </div>
 <div class="product-detail">
     <div class="summary">
-        <img src="<?php echo $data->dvd->Image;  ?>" class="img-preview"/>
+        <img src="<?php echo $data->dvd->Image;  ?>" class="img-preview" alt="Jaquette dvd"/>
         <div>
             <?php
             echo $data->dvd->Synopsis;

@@ -10,10 +10,3 @@ class DVDCollection
     public array $DVDs;
 }
 
-enum CollectionTypeEnum
-{
-    case Genre;
-    case Type;
-    case Highlight;
-    case Other;
-}

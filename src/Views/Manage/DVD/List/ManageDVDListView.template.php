@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var ManageDVDListViewModel $data
+ */
+use Models\ViewModels\ManageDVDListViewModel;
+
+?>
+
 <h2>
     DVD Management
 </h2>

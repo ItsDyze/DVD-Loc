@@ -21,16 +21,24 @@ class RegisterController extends BaseController
 
     public function post(): void
     {
-        $authService = AuthService::getInstance();
+        $authService = new AuthService();
 
         $user = new UserModel();
         $user->FirstName = trim($_POST["FirstName"]);
         $user->LastName = trim($_POST["LastName"]);
         $user->Email = trim($_POST["Email"]);
         $user->Password = trim($_POST["Password"]);
+        $user->City = trim($_POST["City"]);
+        $user->PostCode = trim($_POST["PostCode"]);
+        $user->AddressLine = trim($_POST["AddressLine"]);
 
         $data = new RegisterViewModel();
-        if($user->Email == null || $user->Password == null)
+        if($user->Email == null ||
+            $user->Password == null ||
+            $user->LastName == null ||
+            $user->City == null ||
+            $user->PostCode == null ||
+            $user->AddressLine == null)
         {
             $data->viewState = RegisterViewStateEnum::FailedValidation;
         }

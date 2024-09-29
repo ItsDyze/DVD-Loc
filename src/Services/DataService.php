@@ -4,9 +4,8 @@ namespace Services {
 
     use PDO;
     use PDOException;
-    use Utils\Query\QueryUtils;
 
-    class DataService extends SingletonBaseService
+    class DataService extends BaseService
     {
         private string $DBConfBaseKey = "C218_DataStore_";
 

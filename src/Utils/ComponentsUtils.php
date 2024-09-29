@@ -3,8 +3,8 @@
 namespace Utils
 {
 
-    use Utils\Components\ComponentsEnum;
     use Utils\Components\FormAreaComponent\FormAreaComponent;
+    use Utils\Components\FormEmailComponent\FormEmailComponent;
     use Utils\Components\FormImageComponent\FormImageComponent;
     use Utils\Components\FormNumberComponent\FormNumberComponent;
     use Utils\Components\FormSelectComponent\FormSelectComponent;
@@ -42,6 +42,12 @@ namespace Utils
         public static function getImageComponent($name, $label, $valueBase64, $required, $readOnly):string
         {
             $comp = new FormImageComponent($name, $label, $valueBase64, $required, $readOnly);
+            return $comp->getRenderedComponent();
+        }
+
+        public static function getEmailComponent($name, $label, $placeholder, $value, $required, $readOnly):string
+        {
+            $comp = new FormEmailComponent($name, $label, $placeholder, $value, $required, $readOnly);
             return $comp->getRenderedComponent();
         }
 

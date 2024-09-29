@@ -1,19 +1,22 @@
 <?php
 
 use Models\ViewModels\RegisterViewStateEnum;
+use Utils\ComponentsUtils;
+
+$componentBuilder = new ComponentsUtils();
 
 switch ($this->data->viewState)
     {
         case RegisterViewStateEnum::FailedValidation:
-            echo "Provided input is not valid.";
+            echo "Les données saisies sont incorrectes.";
             break;
         case RegisterViewStateEnum::FailedServer:
-            echo "We couldn't register you right now, please try again later.";
+            echo "Impossible de vous enregistrer. Veuillez réessayer plus tard.";
             break;
         case RegisterViewStateEnum::Success:
-            echo "You have successfully registered.";
+            echo "Enregistré avec succès.";
             ?>
-            <br/>Vous allez être automatiquement redirigé après 2 secondes. <a href="login">Je suis pressé!</a>
+            <br/>Vous allez être automatiquement redirigé après 2 secondes. <a href="/login">Je suis pressé!</a>
             <script>
                 setTimeout(()=>{document.location.href="login"}, 2000);
             </script>
@@ -24,21 +27,16 @@ switch ($this->data->viewState)
 ?>
 <form method="POST" action="" class="sub-page">
     <h2>Register here!</h2>
+    <?php echo $componentBuilder->getTextComponent("LastName", "Nom", "Nom", "", true, false); ?>
+    <?php echo $componentBuilder->getTextComponent("FirstName", "Prénom", "Prénom", "", true, false); ?>
+    <?php echo $componentBuilder->getEmailComponent("Email", "Email", "Email", "", true, false); ?>
+    <?php echo $componentBuilder->getTextComponent("PostCode", "Code postal", "Code postal", "", true, false); ?>
+    <?php echo $componentBuilder->getTextComponent("City", "Ville", "Ville", "", true, false); ?>
+    <?php echo $componentBuilder->getTextComponent("AddressLine", "Rue et numéro", "Rue et numéro", "", true, false); ?>
+
     <label>
-        <span>Last name</span>
-        <input type="text" name="LastName" placeholder="Last name" required>
-    </label>
-    <label>
-        <span>First name</span>
-        <input type="text" name="FirstName" placeholder="First Name" required>
-    </label>
-    <label>
-        <span>Email</span>
-        <input type="email" name="Email" placeholder="Email" required>
-    </label>
-    <label>
-        <span>Password</span>
-        <input type="password" name="Password" placeholder="Password" required>
+        <span>Mot de passe</span>
+        <input type="password" name="Password" placeholder="Mot de passe" required>
     </label>
     <button type="submit">Register</button>
 </form>

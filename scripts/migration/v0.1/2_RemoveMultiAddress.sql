@@ -1,0 +1,12 @@
+START TRANSACTION;
+
+USE c218;
+
+ALTER TABLE users
+    ADD COLUMN PostCode varchar(10)  DEFAULT NULL,
+    ADD COLUMN AddressLine varchar(250)  DEFAULT NULL,
+    ADD COLUMN City varchar(50) DEFAULT NULL;
+
+DROP TABLE addresses;
+
+COMMIT;

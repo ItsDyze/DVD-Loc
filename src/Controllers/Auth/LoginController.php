@@ -28,7 +28,7 @@ class LoginController extends BaseController
     {
         $data = new LoginViewModel();
 
-        $authService = AuthService::getInstance();
+        $authService = new AuthService();
 
         $login = trim($_POST["email"]);
         $password = trim($_POST["password"]);
@@ -42,6 +42,7 @@ class LoginController extends BaseController
             $jwt->iat = time();
             $jwt->nbf = time();
             $jwt->exp = time() + 24*60*60;
+            $jwt->userId = $user->Id;
             $jwt->displayName = $user->getDisplayName();
             $jwt->isAdmin = $user->Email == "contact@dyze.lu";
 

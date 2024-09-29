@@ -1,3 +1,13 @@
+<?php
+    /**
+     * @var DashboardViewModel $data
+     */
+
+use Models\ViewModels\DashboardViewModel;
+
+
+?>
+
 <h2>
     Bienvenue, ceci est votre espace dédié à la gestion de votre commerce!
 </h2>

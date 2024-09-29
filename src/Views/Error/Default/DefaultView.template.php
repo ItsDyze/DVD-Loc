@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var ErrorModel $data
+ */
+
+use Models\ErrorModel;
+
+?>
+
 <p>
     Le serveur a rencontré une erreur.
 </p>

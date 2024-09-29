@@ -3,7 +3,6 @@
 namespace Models\ViewModels;
 
 use Interfaces\IViewModel;
-use Models\DVDLightModel;
 use Models\QueryModel\ManageDVDQueryModel;
 
 class SearchViewModel implements IViewModel{

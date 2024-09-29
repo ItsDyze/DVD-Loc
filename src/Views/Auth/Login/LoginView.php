@@ -10,7 +10,6 @@ namespace Views\Auth\Login
     {
 
         public LoginViewModel $data;
-        private string $content;
 
         public function __construct(LoginViewModel $dataModel)
         {

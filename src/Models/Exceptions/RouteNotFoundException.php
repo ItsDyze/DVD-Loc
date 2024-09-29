@@ -2,8 +2,6 @@
 
 namespace Models\Exceptions;
 
-use Exception;
-
 class RouteNotFoundException extends RouteException
 {
     function __construct($controllerName)

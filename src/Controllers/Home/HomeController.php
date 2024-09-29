@@ -14,7 +14,7 @@ namespace Controllers\Home
         public function get(): void
         {
             $data = new HomeViewModel();
-            $service = DVDService::getInstance();
+            $service = new DVDService();
 
             $queryModel = new HomeQueryModel();
             if(!empty($_GET))

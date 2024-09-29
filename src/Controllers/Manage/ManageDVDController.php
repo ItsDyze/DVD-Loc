@@ -39,7 +39,7 @@ namespace Controllers\Manage
         private function getAll():void
         {
             $viewModel = new ManageDVDListViewModel();
-            $service = DVDService::getInstance();
+            $service = new DVDService();
 
             $queryModel = new ManageDVDQueryModel();
             if(!empty($_GET))
@@ -65,10 +65,10 @@ namespace Controllers\Manage
         private function getById($id): void
         {
             $viewModel = new ManageDVDDetailViewModel();
-            $service = DVDService::getInstance();
+            $service = new DVDService();
 
-            $genreService = GenreService::getInstance();
-            $typeService = TypeService::getInstance();
+            $genreService = new GenreService();
+            $typeService = new TypeService();
 
             $viewModel->Genres  = $genreService->getAll();
             $viewModel->Types  = $typeService->getAll();
@@ -112,7 +112,7 @@ namespace Controllers\Manage
             }
 
             $model = new DVDModel();
-            $service = DVDService::getInstance();
+            $service = new DVDService();
 
             $model->Id = $id;
             $this->postToDvdModel($model);
@@ -127,7 +127,7 @@ namespace Controllers\Manage
         {
 
             $model = new DVDModel();
-            $service = DVDService::getInstance();
+            $service = new DVDService();
 
             $this->postToDvdModel($model);
             //$model->Image = $_POST["Image"];

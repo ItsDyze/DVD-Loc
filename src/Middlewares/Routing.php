@@ -2,21 +2,15 @@
 namespace Middlewares
 {
 
-    use Controllers\Auth\AuthController;
-    use Controllers\Auth\AuthRouter;
+    use Controllers\Account\AccountController;
     use Controllers\Auth\LoginController;
     use Controllers\Auth\LogoutController;
     use Controllers\Auth\RegisterController;
     use Controllers\DVD\DVDController;
     use Controllers\Error\ErrorController;
-    use Controllers\Error\ErrorRouter;
     use Controllers\Home\HomeController;
     use Controllers\Manage\ManageDashboardController;
     use Controllers\Manage\ManageDVDController;
-    use Controllers\Manage\ManageRouter;
-    use Models\Exceptions\BadRouteException;
-    use Models\Exceptions\RouteException;
-    use Models\Exceptions\RouteNotFoundException;
 
     class Routing
     {
@@ -70,6 +64,9 @@ namespace Middlewares
                 },
                 "/dvd" => function() {
                     return new DVDController();
+                },
+                "/account" => function() {
+                    return new AccountController();
                 }
             );
 

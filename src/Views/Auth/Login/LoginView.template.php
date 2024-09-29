@@ -1,8 +1,12 @@
 <?php
+/**
+ * @var LoginViewModel $data
+ */
 
+use Models\ViewModels\LoginViewModel;
 use Models\ViewModels\LoginViewStateEnum;
 
-switch ($this->data->viewState)
+switch ($data->viewState)
 {
     case LoginViewStateEnum::Success:
         echo "Vous êtes connectés avec succès.";
@@ -32,7 +36,7 @@ switch ($this->data->viewState)
             </h2>
             <a href='/auth/register'>Pas de compte? C'est par ici!</a>
             <?php
-            if($this->data->viewState == LoginViewStateEnum::FailedServer) echo "Impossible de vous connecter avec ces identifiants!<br/>";
+            if($data->viewState == LoginViewStateEnum::FailedServer) echo "Impossible de vous connecter avec ces identifiants!<br/>";
             ?>
             <form method="POST" action="">
                 <label>

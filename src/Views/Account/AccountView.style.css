@@ -1,0 +1,22 @@
+.account-detail {
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #3B4252;
+    height: 100%;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.account-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.account-section h3 {
+    text-align: left;
+}

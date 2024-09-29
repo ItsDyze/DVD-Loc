@@ -2,8 +2,8 @@
 namespace Views\Search
 {
 
-    use Models\ViewModels\DVDViewModel;
     use Models\ViewModels\LayoutViewModel;
+    use Models\ViewModels\SearchViewModel;
     use Views\BaseView;
 
     class SearchView extends BaseView
