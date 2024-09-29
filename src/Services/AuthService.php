@@ -73,9 +73,9 @@ namespace Services
                 $result->Email = $queryResult->Email;
                 $result->FirstName = $queryResult->FirstName;
                 $result->LastName = $queryResult->LastName;
-                $result->City = $queryResult->City;
-                $result->PostCode = $queryResult->PostCode;
-                $result->AddressLine = $queryResult->AddressLine;
+                $result->City = $queryResult->City??"";
+                $result->PostCode = $queryResult->PostCode??"";
+                $result->AddressLine = $queryResult->AddressLine??"";
 
                 return $result;
             }

@@ -33,11 +33,11 @@ $componentBuilder = new ComponentsUtils();
     </h3>
     <div class="account-section">
 
-        <?php echo $componentBuilder->getTextComponent("PostCode", "Code postal", "Code postal", $user->PostCode, true, false); ?>
-        <?php echo $componentBuilder->getTextComponent("City", "Ville", "Ville", $user->City, true, false); ?>
+        <?php echo $componentBuilder->getTextComponent("PostCode", "Code postal", "Code postal", $user->PostCode??"", true, false); ?>
+        <?php echo $componentBuilder->getTextComponent("City", "Ville", "Ville", $user->City??"", true, false); ?>
     </div>
     <div class="account-section">
-        <?php echo $componentBuilder->getTextComponent("AddressLine", "Rue et numéro", "Rue et numéro", $user->AddressLine, true, false); ?>
+        <?php echo $componentBuilder->getTextComponent("AddressLine", "Rue et numéro", "Rue et numéro", $user->AddressLine??"", true, false); ?>
     </div>
     <h3>
         Securité
