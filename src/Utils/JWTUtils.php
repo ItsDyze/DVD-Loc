@@ -133,7 +133,7 @@ namespace Utils
             if($admin)
             {
                 // If a specific role is required, check if the user has that role
-                if (!$jwt->isAdmin) {
+                if (!$jwt["isAdmin"]) {
                     // Redirect to an unauthorized page or show an error
                     http_response_code(403);
                     exit;

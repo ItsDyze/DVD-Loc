@@ -1,0 +1,4 @@
+ALTER TABLE users ENGINE=InnoDB;
+
+ALTER TABLE users
+    ADD UNIQUE (Email);
