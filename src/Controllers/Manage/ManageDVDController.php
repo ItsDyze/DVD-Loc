@@ -146,7 +146,7 @@ namespace Controllers\Manage
             $model->Notation = $_POST["Notation"];
             $model->Certification = $_POST["Certification"];
             $model->Note = $_POST["Note"];
-            $model->IsOffered = $_POST["IsOffered"];
+            $model->IsOffered = $_POST["IsOffered"] ?? false;
             $model->Quantity = $_POST["Quantity"];
             $model->Price = $_POST["Price"];
             $model->Year = $_POST["Year"];
