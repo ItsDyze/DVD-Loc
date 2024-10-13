@@ -83,11 +83,7 @@ namespace Services {
 
         protected function executeStatement($statement, $parameters)
         {
-            if (substr_count($statement, "?") == array_count_values($parameters))
-            {
-                echo "Too few or too many parameters for the provided statement";
-                die();
-            }
+            $this->validateStatementAndParameters($statement, $parameters);
 
             $query = $this->GetDBContext()->prepare($statement);
             return $query->execute($parameters);

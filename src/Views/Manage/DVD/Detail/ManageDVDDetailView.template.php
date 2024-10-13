@@ -22,7 +22,6 @@ $action = match ($data->State)
     🎬 <?php echo $data->DVD->LocalTitle; ?> 🎬
 </h2>
 <a class="custom-link" href="/Manage/DVD">Back to the list</a>
-
 <form method="POST" action="" class="container">
     <div class="side-nav section-block">
         <a href="#General">General</a>
@@ -36,8 +35,6 @@ $action = match ($data->State)
         <div>
             <h3 id="General">General</h3>
             <input type="hidden" name="_METHOD" value="<?php echo $action; ?>"/>
-            <input type="hidden" name="Genres" />
-            <input type="hidden" name="TypeId" />
             <?php echo $componentBuilder->getTextComponent("Title", "Titre", "Titre", $data->DVD->Title, true, false); ?>
             <?php echo $componentBuilder->getTextComponent("LocalTitle", "Titre local", "Titre local", $data->DVD->LocalTitle, true, false); ?>
             <?php echo $componentBuilder->getAreaComponent("Synopsis", "Synopsis", "Synopsis", $data->DVD->Synopsis, true, false); ?>
@@ -73,7 +70,6 @@ $action = match ($data->State)
             Y chez le client
             Z perdus
         </div>
-
-        <button type="submit">Save</button>
+        <button type="submit">Sauvegarder</button>
     </div>
 </form>

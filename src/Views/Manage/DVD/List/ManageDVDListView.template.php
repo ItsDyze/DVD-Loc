@@ -25,6 +25,7 @@ use Models\ViewModels\ManageDVDListViewModel;
             <th scope="col" onclick="orderBy('IsOffered')">Dans l'offre</th>
             <th scope="col" onclick="orderBy('Price')">Prix</th>
             <th scope="col" onclick="orderBy('Quantity')">Quantité</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +36,12 @@ use Models\ViewModels\ManageDVDListViewModel;
                 <th scope="col" class="col-short"><?php echo $row->IsOffered; ?></th>
                 <th scope="col" class="col-price"><?php echo number_format((float)$row->Price, 2, ',', '') . " € "; ?></th>
                 <th scope="col" class="col-number"><?php echo $row->Quantity; ?></th>
+                <th scope="col" class="col-short">
+                    <form method="POST" action="/manage/dvd/<?php echo $row->Id; ?>" class="container" onclick="event.stopPropagation()">
+                        <input type="hidden" name="_METHOD" value="DELETE"/>
+                        <button type="submit" title="delete">❌️</button>
+                    </form>
+                </th>
             </tr>
         <?php endforeach ?>
         </tbody>

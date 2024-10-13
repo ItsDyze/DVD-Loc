@@ -299,7 +299,7 @@ namespace Services
                 ->set("Notation", $dvd->Notation)
                 ->set("Certification", $dvd->Certification)
                 ->set("Note", $dvd->Note)
-                ->set("IsOffered", $dvd->IsOffered)
+                ->set("IsOffered", (int)($dvd->IsOffered??false))
                 ->set("Quantity", $dvd->Quantity)
                 ->set("Price", $dvd->Price)
                 ->set("Year", $dvd->Year)
@@ -324,7 +324,7 @@ namespace Services
                 ->value("Notation", $dvd->Notation)
                 ->value("Certification", $dvd->Certification)
                 ->value("Note", $dvd->Note)
-                ->value("IsOffered", $dvd->IsOffered)
+                ->value("IsOffered", (int)($dvd->IsOffered??false))
                 ->value("Quantity", $dvd->Quantity)
                 ->value("Price", $dvd->Price)
                 ->value("Year", $dvd->Year)
@@ -335,6 +335,13 @@ namespace Services
             $query = $queryBuilder->getQuery();
 
             return $this->insertStatement($query->sql, $query->params);
+        }
+
+        public function delete(int $id)
+        {
+            $query = "DELETE FROM dvds WHERE Id = ?;";
+
+            return $this->executeStatement($query, [$id]);
         }
 
         function isAllowedOrderColumn(string $column): bool

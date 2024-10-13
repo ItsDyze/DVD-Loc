@@ -20,7 +20,7 @@ abstract class BaseController
     {
         http_response_code(405);
     }
-    public function delete(): void
+    public function delete(int $id): void
     {
         http_response_code(405);
     }

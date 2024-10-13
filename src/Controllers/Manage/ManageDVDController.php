@@ -138,6 +138,16 @@ namespace Controllers\Manage
             die();
         }
 
+        public function delete($id): void
+        {
+            $service = new DVDService();
+
+            $newId = $service->delete($id);
+
+            header("Location: /manage/dvd");
+            die();
+        }
+
         private function postToDvdModel(DVDModel $model)
         {
             $model->Title = $_POST["Title"];
